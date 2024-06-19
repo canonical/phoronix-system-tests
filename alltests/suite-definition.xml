@@ -1,0 +1,648 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>alltests</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>-fno-omit-framepointer flag test</Description>
+    <Maintainer>Vladimir Petko</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>system/sqlite-1.0.1</Test>
+    <Description>SQLite </Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnuradio-1.0.0</Test>
+    <Description>Test: Five Back to Back FIR Filters</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnuradio-1.0.0</Test>
+    <Description>Test: Signal Source (Cosine)</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnuradio-1.0.0</Test>
+    <Description>Test: FIR Filter</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnuradio-1.0.0</Test>
+    <Description>Test: IIR Filter</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnuradio-1.0.0</Test>
+    <Description>Test: FM Deemphasis Filter</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnuradio-1.0.0</Test>
+    <Description>Test: Hilbert Transform</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-bzip2-1.0.2</Test>
+    <Description>System BZIP2 Decompression Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-gzip-1.1.1</Test>
+    <Description>System GZIP Decompression Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-xz-1.0.2</Test>
+    <Description>System XZ Decompression Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>system/gnupg-1.0.1</Test>
+    <Description>GnuPG Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-tiff-1.0.1</Test>
+    <Description>System Libtiff Decompression Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>pts/system-libjpeg-1.1.0</Test>
+    <Description>System JPEG Library Decode Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>PBKDF2-sha512</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>PBKDF2-whirlpool</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>AES-XTS 256b Encryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>AES-XTS 256b Decryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Serpent-XTS 256b Encryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Serpent-XTS 256b Decryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Twofish-XTS 256b Encryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Twofish-XTS 256b Decryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>AES-XTS 512b Encryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>AES-XTS 512b Decryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Serpent-XTS 512b Encryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Serpent-XTS 512b Decryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Twofish-XTS 512b Encryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup-1.0.1</Test>
+    <Description>Twofish-XTS 512b Decryption</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Description>GEGL System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/hugin-1.0.0</Test>
+    <Description>Hugin System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/inkscape-1.0.1</Test>
+    <Description>Inkscape System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/ocrmypdf-1.0.0</Test>
+    <Description>OCRMyPDF System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/octave-benchmark-1.0.1</Test>
+    <Description>GNU Octave Benchmark System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/rawtherapee-1.0.1</Test>
+    <Description>RawTherapee System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/rsvg-1.0.0</Test>
+    <Description>librsvg System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/tesseract-ocr-1.0.1</Test>
+    <Description>Tesseract OCR System </Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-cos</Arguments>
+    <Description>Benchmark: cos</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-exp</Arguments>
+    <Description>Benchmark: exp</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-ffs</Arguments>
+    <Description>Benchmark: ffs</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-pow</Arguments>
+    <Description>Benchmark: pow</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-sin</Arguments>
+    <Description>Benchmark: sin</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-log2</Arguments>
+    <Description>Benchmark: log2</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-modf</Arguments>
+    <Description>Benchmark: modf</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-sinh</Arguments>
+    <Description>Benchmark: sinh</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-sqrt</Arguments>
+    <Description>Benchmark: sqrt</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-tanh</Arguments>
+    <Description>Benchmark: tanh</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-asinh</Arguments>
+    <Description>Benchmark: asinh</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-atanh</Arguments>
+    <Description>Benchmark: atanh</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-ffsll</Arguments>
+    <Description>Benchmark: ffsll</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-sincos</Arguments>
+    <Description>Benchmark: sincos</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.8.0</Test>
+    <Arguments>bench-pthread_once</Arguments>
+    <Description>Benchmark: pthread_once</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.4</Test>
+    <Arguments>Copy</Arguments>
+    <Description>Type: Copy</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.4</Test>
+    <Arguments>Scale</Arguments>
+    <Description>Type: Scale</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.4</Test>
+    <Arguments>Triad</Arguments>
+    <Description>Type: Triad</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.4</Test>
+    <Arguments>Add</Arguments>
+    <Description>Type: Add</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia-1.3.2</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia-1.3.2</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench-1.1.0</Test>
+    <Arguments>jython</Arguments>
+    <Description>Java Test: Jython</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench-1.1.0</Test>
+    <Arguments>tradebeans</Arguments>
+    <Description>Java Test: Tradebeans</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance-1.3.0</Test>
+    <Arguments>dotty</Arguments>
+    <Description>Test: Scala Dotty</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance-1.3.0</Test>
+    <Arguments>reactors</Arguments>
+    <Description>Test: Savina Reactors.IO</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance-1.3.0</Test>
+    <Arguments>page-rank</Arguments>
+    <Description>Test: Apache Spark PageRank</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/john-the-ripper-1.8.0</Test>
+    <Arguments>--format=bcrypt</Arguments>
+    <Description>Test: Blowfish</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset slow</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Slow</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset medium</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset slow</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Slow</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset medium</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset veryfast</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Very Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset superfast</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Super Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset ultrafast</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Ultra Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset veryfast</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Very Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset superfast</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Super Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar-1.2.0</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset ultrafast</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Ultra Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/x265-1.3.0</Test>
+    <Arguments>Bosphorus_3840x2160.y4m</Arguments>
+    <Description>Video Input: Bosphorus 4K</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/x265-1.3.0</Test>
+    <Arguments>Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m</Arguments>
+    <Description>Video Input: Bosphorus 1080p</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/himeno-1.3.0</Test>
+    <Description>Poisson Pressure Solver</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip-1.10.0</Test>
+    <Description>Test: Compression Rating</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip-1.10.0</Test>
+    <Description>Test: Decompression Rating</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stockfish-1.4.0</Test>
+    <Description>Total Time</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish-1.1.2</Test>
+    <Description>1024 Hash Memory, 26 Depth</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/swet-1.0.0</Test>
+    <Description>Average</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gcc-1.4.0</Test>
+    <Description>Time To Compile</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel-1.15.0</Test>
+    <Description>Time To Compile</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/build-llvm-1.5.0</Test>
+    <Description>Time To Compile</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/c-ray-1.2.0</Test>
+    <Description>Total Time - 4K, 16 Rays Per Pixel</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/povray-1.2.1</Test>
+    <Description>Trace Time</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rust-mandel-1.0.0</Test>
+    <Description>Time To Complete Serial/Parallel Mandelbrot</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/numpy-1.2.1</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/cython-bench-1.1.0</Test>
+    <Arguments>NQUEENS</Arguments>
+    <Description>Test: N-Queens</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench-1.0.0</Test>
+    <Arguments>32 process</Arguments>
+    <Description>Count: 32 - Type: Process</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/m-queens-1.1.0</Test>
+    <Description>Time To Solve</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance-1.0.0</Test>
+    <Arguments>make all</Arguments>
+    <Description>Test: Serial</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance-1.0.0</Test>
+    <Arguments>make smp</Arguments>
+    <Description>Test: SMP Parallel</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt-1.7.0</Test>
+    <Arguments>-a m7m</Arguments>
+    <Description>Algorithm: m7m</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt-1.7.0</Test>
+    <Arguments>-a deep</Arguments>
+    <Description>Algorithm: deep</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt-1.7.0</Test>
+    <Arguments>-a skein</Arguments>
+    <Description>Algorithm: skein</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt-1.7.0</Test>
+    <Arguments>-a sha256t</Arguments>
+    <Description>Algorithm: sha256t</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl-3.1.0</Test>
+    <Description>RSA 4096-bit Performance</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tjbench-1.2.0</Test>
+    <Arguments>decompression-throughput</Arguments>
+    <Description>Test: Decompression Throughput</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.4.0</Test>
+    <Arguments>--concurrency=128</Arguments>
+    <Description>Clients: 128</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.4.0</Test>
+    <Arguments>--concurrency=256</Arguments>
+    <Description>Clients: 256</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.3</Test>
+    <Arguments>resize</Arguments>
+    <Description>Test: resize</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.3</Test>
+    <Arguments>rotate</Arguments>
+    <Description>Test: rotate</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.3</Test>
+    <Arguments>auto-levels</Arguments>
+    <Description>Test: auto-levels</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.3</Test>
+    <Arguments>unsharp-mask</Arguments>
+    <Description>Test: unsharp-mask</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/redis-1.4.0</Test>
+    <Arguments>-t get</Arguments>
+    <Description>Test: GET</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/redis-1.4.0</Test>
+    <Arguments>-t set</Arguments>
+    <Description>Test: SET</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b3</Arguments>
+    <Description>Compression Level: 3 - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b3</Arguments>
+    <Description>Compression Level: 3 - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b8</Arguments>
+    <Description>Compression Level: 8 - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b8</Arguments>
+    <Description>Compression Level: 8 - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b12</Arguments>
+    <Description>Compression Level: 12 - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b12</Arguments>
+    <Description>Compression Level: 12 - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b19</Arguments>
+    <Description>Compression Level: 19 - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b19</Arguments>
+    <Description>Compression Level: 19 - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b3 --long</Arguments>
+    <Description>Compression Level: 3, Long Mode - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b3 --long</Arguments>
+    <Description>Compression Level: 3, Long Mode - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b8 --long</Arguments>
+    <Description>Compression Level: 8, Long Mode - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b8 --long</Arguments>
+    <Description>Compression Level: 8, Long Mode - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b19 --long</Arguments>
+    <Description>Compression Level: 19, Long Mode - Compression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.6.0</Test>
+    <Arguments>-b19 --long</Arguments>
+    <Description>Compression Level: 19, Long Mode - Decompression Speed</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d-1.15.1</Test>
+    <Arguments>-i summer_nature_4k.ivf</Arguments>
+    <Description>Video Input: Summer Nature 4K</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d-1.15.1</Test>
+    <Arguments>-i summer_nature_1080p.ivf</Arguments>
+    <Description>Video Input: Summer Nature 1080p</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng-1.11.0</Test>
+    <Arguments>--crypt 0</Arguments>
+    <Description>Test: Crypto</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng-1.11.0</Test>
+    <Arguments>--cpu 0 --cpu-method all</Arguments>
+    <Description>Test: CPU Stress</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ctx-clock-1.0.0</Test>
+    <Description>Context Switch Time</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench-1.1.0</Test>
+    <Arguments>memory run</Arguments>
+    <Description>Test: Memory</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench-1.1.0</Test>
+    <Arguments>cpu run</Arguments>
+    <Description>Test: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pybench-1.1.3</Test>
+    <Description>Total For Average Test Times</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed-1.0.1</Test>
+    <Arguments>emily.appleseed</Arguments>
+    <Description>Scene: Emily</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed-1.0.1</Test>
+    <Arguments>disney_material_1.appleseed</Arguments>
+    <Description>Scene: Disney Material</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/phpbench-1.1.6</Test>
+    <Description>PHP Benchmark Suite</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/git-1.1.0</Test>
+    <Description>Time To Complete Common Git Commands</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d-1.15.1</Test>
+    <Arguments>-i chimera_8b_1080p.ivf</Arguments>
+    <Description>Video Input: Chimera 1080p</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d-1.15.1</Test>
+    <Arguments>-i chimera_10b_1080p.ivf</Arguments>
+    <Description>Video Input: Chimera 1080p 10-bit</Description>
+  </Execute>
+  <Execute>
+    <Test>system/gmic-1.0.0</Test>
+    <Description>G'MIC System </Description>
+  </Execute>
+  <Execute>
+    <Test>system/tesseract-ocr-1.0.1</Test>
+    <Description>Time To OCR 7 Images</Description>
+  </Execute>
+  <Execute>
+    <Test>system/openssl-1.2.0</Test>
+    <Description>OpenSSL Processor </Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.5.0</Test>
+    <Arguments>--concurrency=128</Arguments>
+    <Description>Clients: 128</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.5.0</Test>
+    <Arguments>--concurrency=256</Arguments>
+    <Description>Clients: 256</Description>
+  </Execute>
+</PhoronixTestSuite>
