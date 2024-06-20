@@ -10,3 +10,5 @@ cp -r alltests ~/.phoronix-test-suite/test-suites/local/
 cp -r test-profiles/* ~/.phoronix-test-suite/test-profiles/
 cp ./config/user-config.xml ~/.phoronix-test-suite/
 
+
+echo !!!add deb-src to the apt sources!!!
