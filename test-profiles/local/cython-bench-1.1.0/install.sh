@@ -1,7 +1,5 @@
 #!/bin/sh
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install cython3
-
 tar -xf cython-0.29.21.tar.gz
 cd cython-0.29.21/Demos/benchmarks
 python3 setup.py build_ext --inplace

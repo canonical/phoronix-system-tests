@@ -1,7 +1,5 @@
 #!/bin/bash
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install xz-utils
-
 XZ=`which xz`
 echo $? > ~/install-exit-status
 

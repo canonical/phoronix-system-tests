@@ -1,8 +1,5 @@
 #!/bin/bash
 
-
-
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install bzip2
 BZIP=`which bzip2`
 echo $? > ~/install-exit-status
 

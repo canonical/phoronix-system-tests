@@ -2,7 +2,6 @@
 
 tar -xvf misc.tar.gz
 convert misc/4.2.03.tiff mandrill.jpeg
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install libjpeg-turbo-progs
 
 DJPG=`which djpeg`
 echo $? > ~/install-exit-status

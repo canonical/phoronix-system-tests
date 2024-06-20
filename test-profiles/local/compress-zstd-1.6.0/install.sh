@@ -1,6 +1,4 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install zstd
-echo $? > ~/install-exit-status
 cd ~
 cat > compress-zstd <<EOT
 #!/bin/sh

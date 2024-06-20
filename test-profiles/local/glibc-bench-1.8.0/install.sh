@@ -1,8 +1,4 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install build-essential dpkg-dev \
-    rdfind symlinks gperf systemtap-sdt-dev libaudit-dev libcap-dev binutils-for-host \
-    g++-multilib libgd-dev gettext quilt debhelper-compat libselinux1-dev
-
 rm -rf glibc-2.39
 apt source glibc
 cd glibc-2.39

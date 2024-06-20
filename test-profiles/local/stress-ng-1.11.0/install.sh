@@ -1,8 +1,5 @@
 #!/bin/sh
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install stress-ng
-
-echo $? > ~/install-exit-status
 cd ~
 cat << EOF > stress-ng
 #!/bin/sh

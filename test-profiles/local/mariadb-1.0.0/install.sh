@@ -1,6 +1,5 @@
 #!/bin/sh
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install mariadb-server mariadb-client
 
 rm -rf mariadb_
 tar -xf mariadb-11.5.0.tar.gz

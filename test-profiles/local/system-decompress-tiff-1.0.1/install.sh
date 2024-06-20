@@ -1,5 +1,5 @@
 #!/bin/bash
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install libtiff-tools
+
 
 tar -xzf misc.tar.gz
 

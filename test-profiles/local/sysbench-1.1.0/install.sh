@@ -1,7 +1,4 @@
 #!/bin/sh
-
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install sysbench
-echo $? > ~/install-exit-status
 cd ~/
 
 echo "#!/bin/sh

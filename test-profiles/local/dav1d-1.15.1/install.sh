@@ -1,6 +1,5 @@
 #!/bin/sh
 # FFmpeg install to demux AV1 WebM to IVF that can then be consumed by dav1d...
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install ffmpeg dav1d
 
 tar -xf ffmpeg-6.1.1.tar.xz
 echo $? > ~/install-exit-status

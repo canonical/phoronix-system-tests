@@ -1,6 +1,5 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install openssl
-echo $? > ~/install-exit-status
+
 cd ~
 echo "#!/bin/sh
 cd openssl-3.3.0

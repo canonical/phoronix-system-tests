@@ -1,7 +1,5 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install build-essential dpkg-dev \
-    rdfind symlinks gperf systemtap-sdt-dev libaudit-dev libcap-dev binutils-for-host \
-    g++-multilib libgd-dev
+
 	
 tar -jxvf rodinia_3.1.tar.bz2
 

@@ -1,5 +1,4 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install python3-scipy python3-numpy
 
 tar -xvf numpy-benchmarks-20190903.tar.gz
 echo $? > ~/install-exit-status

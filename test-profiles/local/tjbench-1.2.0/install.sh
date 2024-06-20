@@ -1,7 +1,7 @@
 #!/bin/sh
 unzip -o jpeg-test-1.zip
 tar -xzvf libjpeg-turbo-2.1.0.tar.gz
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install libjpeg-turbo-progs
+
 echo $? > ~/install-exit-status
 cd ~
 echo "#!/bin/sh

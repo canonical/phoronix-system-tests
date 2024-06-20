@@ -1,7 +1,4 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install redis-server redis-tools
-
-
 rm -rf redis-7.0.4
 tar -xzf redis-7.0.4.tar.gz
 

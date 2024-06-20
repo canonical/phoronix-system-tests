@@ -1,6 +1,4 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install sqlite3
-
 tar -zxvf pts-sqlite-tests-1.tar.gz
 tar -zxvf sqlite-autoconf-3410200.tar.gz
 mkdir sqlite_/

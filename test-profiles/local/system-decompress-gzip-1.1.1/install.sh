@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install gzip
+
 GZIP=`which gzip`
 echo $? > ~/install-exit-status
 
