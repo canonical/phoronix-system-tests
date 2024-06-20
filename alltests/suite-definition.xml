@@ -9,7 +9,7 @@
     <Maintainer>Vladimir Petko</Maintainer>
   </SuiteInformation>
   <Execute>
-    <Test>system/sqlite-1.0.1</Test>
+    <Test>local/sqlite-2.2.0</Test>
     <Description>SQLite </Description>
   </Execute>
   <Execute>

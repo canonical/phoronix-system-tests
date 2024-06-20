@@ -15,5 +15,6 @@
     <TestType>Processor</TestType>
     <ExternalDependencies>build-utilities, zlib-development</ExternalDependencies>
     <Maintainer>Jim Kukunas</Maintainer>
+    <SystemDependencies>libtiff-tools</SystemDependencies>
   </TestProfile>
 </PhoronixTestSuite>
