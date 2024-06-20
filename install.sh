@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -y git php-cli php-xml 
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y git php-cli php-xml libtiff-tools libjpeg-turbo-progs
 
 git submodule init
 git submodule update --recursive
