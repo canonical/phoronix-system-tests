@@ -1,5 +1,4 @@
 #!/bin/sh
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install x265
 echo $? > ~/install-exit-status
 cd ~
 7z x Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z -aoa
