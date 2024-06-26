@@ -247,17 +247,17 @@
   </Execute>
   <!-- downloads benchmark and tests java-->
   <Execute>
-    <Test>pts/renaissance-1.3.0</Test>
+    <Test>local/renaissance-1.5.0</Test>
     <Arguments>dotty</Arguments>
     <Description>Test: Scala Dotty</Description>
   </Execute>
   <Execute>
-    <Test>pts/renaissance-1.3.0</Test>
+    <Test>local/renaissance-1.5.0</Test>
     <Arguments>reactors</Arguments>
     <Description>Test: Savina Reactors.IO</Description>
   </Execute>
   <Execute>
-    <Test>pts/renaissance-1.3.0</Test>
+    <Test>local/renaissance-1.5.0</Test>
     <Arguments>page-rank</Arguments>
     <Description>Test: Apache Spark PageRank</Description>
   </Execute>
