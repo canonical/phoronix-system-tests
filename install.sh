@@ -26,7 +26,7 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get -y install gzip
 DEBIAN_FRONTEND=noninteractive sudo apt-get -y install libtiff-tools
 DEBIAN_FRONTEND=noninteractive sudo apt-get -y install xz-utils
 DEBIAN_FRONTEND=noninteractive sudo apt-get -y install libjpeg-turbo-progs
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install x265 gnuradio
+DEBIAN_FRONTEND=noninteractive sudo apt-get -y install x265 gnuradio librsvg2-bin octave rawtherapee ocrmypdf inkscape gegl
 
 
 git submodule init
