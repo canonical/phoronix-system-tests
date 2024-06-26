@@ -2,7 +2,6 @@
 tar -zxvf pts-sqlite-tests-1.tar.gz
 tar -zxvf sqlite-autoconf-3410200.tar.gz
 mkdir sqlite_/
-cd sqlite-autoconf-3410200/
 echo "#!/bin/bash
 thread_num=\$1
 if ! [[ \"\$thread_num\" =~ ^[0-9]+$ ]]
