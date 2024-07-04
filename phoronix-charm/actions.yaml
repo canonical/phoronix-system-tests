@@ -1,0 +1,24 @@
+provision:
+  description: Provision an openstack instance for performance testing
+  params:
+    profile:
+      type: string
+      description: Unique profile name
+    flavor:
+      type: string
+      description: Valid openstack flavor
+    instances:
+      type: integer
+      description: Number of instances to provision. Not supported yet.
+
+remove:
+  description: Remove running test machines
+  additionalProperties: false
+
+
+benchmark:
+  description: submit benchmark request
+  params:
+    suite:
+      description: base64-encoded test suite (?)
+      type: string
