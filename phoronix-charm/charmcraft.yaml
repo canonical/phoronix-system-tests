@@ -38,6 +38,10 @@ bases:
       channel: "22.04"
 
 
+parts:
+  charm:
+    charm-python-packages: [shade]
+
 # (Optional) Configuration options for the charm
 # This config section defines charm config options, and populates the Configure
 # tab on Charmhub.
