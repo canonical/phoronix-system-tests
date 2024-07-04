@@ -25,10 +25,16 @@ class PhoronixCharmCharm(ops.CharmBase):
         }
         # Actions
         action_bindings = {
-            self.on.provision: self._on_provision_action,
-            self.on.remove: self._on_remove_action,
-            self.on.benchmark: self._on_benchmark_action
+            self.on.provision_action: self._on_provision_action,
+            self.on.remove_action: self._on_remove_action,
+            self.on.benchmark_action: self._on_benchmark_action,
         }
+        # Observe events and actions
+        for event, handler in event_bindings.items():
+            self.framework.observe(event, handler)
+
+        for action, handler in action_bindings.items():
+            self.framework.observe(action, handler)
 
     def _on_provision_action(self, event):
         pass
@@ -40,6 +46,9 @@ class PhoronixCharmCharm(ops.CharmBase):
         pass
 
     def _on_install(self, event: ops.InstallEvent):
+        pass
+
+    def _on_config_changed(self, _):
         pass
 
     def _on_start(self, event: ops.StartEvent):
