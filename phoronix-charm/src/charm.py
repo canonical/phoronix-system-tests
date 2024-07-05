@@ -5,7 +5,8 @@
 """Charm the application."""
 
 import logging
-
+from phoronix_provider import PhoronixProvider
+from openstack_provider import OpenStackProvider
 import ops
 
 logger = logging.getLogger(__name__)
@@ -13,6 +14,8 @@ logger = logging.getLogger(__name__)
 
 class PhoronixCharmCharm(ops.CharmBase):
     """Charm the application."""
+
+    provider: PhoronixProvider
 
     def __init__(self, framework: ops.Framework):
         super().__init__(framework)
@@ -36,6 +39,8 @@ class PhoronixCharmCharm(ops.CharmBase):
         for action, handler in action_bindings.items():
             self.framework.observe(action, handler)
 
+        self.provider = OpenStackProvider()
+
     def _on_provision_action(self, event):
         pass
 
@@ -46,10 +51,11 @@ class PhoronixCharmCharm(ops.CharmBase):
         pass
 
     def _on_install(self, event: ops.InstallEvent):
-        pass
+        self.provider.configure(self.config)
+        self.provider.install()
 
     def _on_config_changed(self, _):
-        pass
+        self.provider.configure(self.config)
 
     def _on_start(self, event: ops.StartEvent):
         """Handle start event."""
