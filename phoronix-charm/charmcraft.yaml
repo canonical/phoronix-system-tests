@@ -40,7 +40,7 @@ bases:
 
 parts:
   charm:
-    charm-python-packages: [shade]
+    charm-python-packages: [openstacksdk]
 
 # (Optional) Configuration options for the charm
 # This config section defines charm config options, and populates the Configure
@@ -56,4 +56,40 @@ config:
 
         Acceptable values are: "info", "debug", "warning", "error" and "critical"
       default: "info"
+      type: string
+    username:
+      description: |
+        openstack credentials
+      type: string
+    project_name:
+      description: |
+        openstack credentials
+      type: string
+    password:
+      description: |
+        openstack credentials
+      type: string
+    auth_url:
+      description: |
+        openstack credentials
+      type: string
+    project_domain_name:
+      description: |
+        openstack credentials
+      type: string
+    region_name:
+      description: |
+        openstack credentials
+      type: string
+    user_domain_name:
+      description: |
+        openstack credentials
+      type: string
+    identify_api_version:
+      description: |
+        openstack credentials
+      type: string
+    interface:
+      description: |
+        openstack credentials
       type: string
