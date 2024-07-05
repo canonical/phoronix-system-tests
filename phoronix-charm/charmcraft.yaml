@@ -40,7 +40,7 @@ bases:
 
 parts:
   charm:
-    charm-python-packages: [openstacksdk]
+    charm-python-packages: [openstacksdk, pyyaml]
 
 # (Optional) Configuration options for the charm
 # This config section defines charm config options, and populates the Configure
