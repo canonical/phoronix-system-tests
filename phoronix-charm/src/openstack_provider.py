@@ -3,16 +3,26 @@
 
 import openstack
 
+from os import environ
+
 from phoronix_provider import PhoronixProvider
 from ssh import PHORONIX_PUBLIC_KEY
 from ssh import PHORONIX_PRIVATE_KEY
 from ssh import SSHConnection
+from invoke.exceptions import UnexpectedExit
 
 KEYPAIR_NAME = "local"
-
+DEFAULT_USER = "ubuntu"
+PHORONIX_BASE = "PHORONIX_BASE"
 
 class OpenStackProvider(PhoronixProvider):
     """OpenStack-based test run orchestrator."""
+
+    def __get_addr(self, server_name):
+        servers = [x for x in self._servers if x.name == server_name]
+        if len(servers) == 0:
+            raise RuntimeError(server_name  + " not found")
+        return servers[0].addresses['net_instances'] [0]['addr']
 
     def install(self):
         keypair = self.connection.compute.find_keypair(KEYPAIR_NAME)
@@ -59,7 +69,24 @@ class OpenStackProvider(PhoronixProvider):
             name, image=image, flavor=flavor)
         self.connection.wait_for_server(server)
         self._servers.append(server)
-        pass
+
+    def setup_phoronix_suite(self, server_name):
+        ip = self.__get_addr(server_name)
+
+        suite_base = environ[PHORONIX_BASE]
+        try:
+            with SSHConnection(DEFAULT_USER, ip) as ssh:
+                # transfer all files from local to the remote phoronix directory
+
+                ssh.put(suite_base, "~", recursive=True)
+
+            # run install script
+            #
+            return True
+        except UnexpectedExit as err:
+            print(err)
+            return False
+
 
     def remove(self, event):
         """Remove Phoronix workers.
@@ -71,12 +98,25 @@ class OpenStackProvider(PhoronixProvider):
             self.connection.delete_server(server, force=True)
         pass
 
+    def list_servers(self):
+        return [x.name for x in self._servers]
+
+    def put(self, server, local_file, remote_file):
+        pass
+
+    def run(self, server_name, command, **kwargs):
+        ip = self.__get_addr(server_name)
+        with SSHConnection(DEFAULT_USER, ip) as ssh:
+            ssh.run(command, **kwargs)
+
     def benchmark(self, event):
         """Run benchmark on Phoronix workers.
 
         Args:
             event (_type_): _description_
         """
+        for server in self._servers:
+            print(server)
         # connect to servers
         # submit jobs
         # wait for completion
