@@ -53,7 +53,7 @@ class SSHConnection:
             "key_filename": PHORONIX_PRIVATE_KEY,
             "look_for_keys": "false"
         })
-        return self.connection
+        return self
 
     def __exit__(self, *args):
         self.connection.close()
