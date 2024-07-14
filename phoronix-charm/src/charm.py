@@ -5,9 +5,10 @@
 """Charm the application."""
 
 import logging
-from phoronix_provider import PhoronixProvider
-from openstack_provider import OpenStackProvider
+
 import ops
+from openstack_provider import OpenStackProvider
+from phoronix_provider import PhoronixProvider
 
 logger = logging.getLogger(__name__)
 

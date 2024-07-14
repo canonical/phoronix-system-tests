@@ -1,9 +1,11 @@
-""" Test openstack provider against live openstack
+"""Test openstack provider against live openstack
 """
+
 import unittest
+from os import environ
 
 from openstack_provider import OpenStackProvider
-from os import environ
+
 
 class OpenStackProviderTest(unittest.TestCase):
 
@@ -23,7 +25,7 @@ class OpenStackProviderTest(unittest.TestCase):
         self.provider.configure(config)
 
     def test_openstack(self):
-        servers  = self.provider.list_servers()
+        servers = self.provider.list_servers()
         print(servers[0])
         self.provider.setup_phoronix_suite(servers[0])
         print("done")

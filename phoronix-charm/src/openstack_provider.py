@@ -1,22 +1,18 @@
 """OpenStack-based test run orchestrator."""
 
+import tempfile
+from os import environ, path
+from subprocess import run
 
 import openstack
-
-from os import environ
-from os import path
-import tempfile
-
-from phoronix_provider import PhoronixProvider
-from ssh import PHORONIX_PUBLIC_KEY
-from ssh import PHORONIX_PRIVATE_KEY
-from ssh import SSHConnection
 from invoke.exceptions import UnexpectedExit
-from subprocess import run
+from phoronix_provider import PhoronixProvider
+from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHConnection
 
 KEYPAIR_NAME = "local"
 DEFAULT_USER = "ubuntu"
 PHORONIX_BASE = "PHORONIX_BASE"
+
 
 class OpenStackProvider(PhoronixProvider):
     """OpenStack-based test run orchestrator."""
@@ -24,8 +20,8 @@ class OpenStackProvider(PhoronixProvider):
     def __get_addr(self, server_name):
         servers = [x for x in self._servers if x.name == server_name]
         if len(servers) == 0:
-            raise RuntimeError(server_name  + " not found")
-        return servers[0].addresses['net_instances'] [0]['addr']
+            raise RuntimeError(server_name + " not found")
+        return servers[0].addresses["net_instances"][0]["addr"]
 
     def install(self):
         keypair = self.connection.compute.find_keypair(KEYPAIR_NAME)
@@ -35,10 +31,12 @@ class OpenStackProvider(PhoronixProvider):
                 public_key_file.write(keypair.public_key)
             with open(PHORONIX_PRIVATE_KEY, "w") as private_key_file:
                 private_key_file.write(keypair.private_key)
-#       try:
+        #       try:
         self.connection.create_security_group_rule(
-            "allow_ssh", protocol="tcp", port_range_min=22, port_range_max=22)
-#       except Err:
+            "allow_ssh", protocol="tcp", port_range_min=22, port_range_max=22
+        )
+
+    #       except Err:
 
     def configure(self, config):
         """Configure provider with the charm config.
@@ -47,15 +45,16 @@ class OpenStackProvider(PhoronixProvider):
             config (_type_): _description_
         """
         self.connection = openstack.connect(
-            auth_url=config['auth_url'],
-            project_name=config['project_name'],
-            username=config['username'],
-            password=config['password'],
-            region_name=config['region_name'],
-            user_domain_name=config['user_domain_name'],
-            project_domain_name=config['project_domain_name'],
-            app_name='phoronix',
-            app_version='1.0')
+            auth_url=config["auth_url"],
+            project_name=config["project_name"],
+            username=config["username"],
+            password=config["password"],
+            region_name=config["region_name"],
+            user_domain_name=config["user_domain_name"],
+            project_domain_name=config["project_domain_name"],
+            app_name="phoronix",
+            app_version="1.0",
+        )
         self._servers = self.connection.list_servers()
 
     def provision(self, event):
@@ -64,12 +63,11 @@ class OpenStackProvider(PhoronixProvider):
         Args:
             event (_type_): _description_
         """
-        name = event.params['profile']
-        image = event.params['image']
-        flavor = event.params['flavor']
+        name = event.params["profile"]
+        image = event.params["image"]
+        flavor = event.params["flavor"]
 
-        server = self.connection.create_server(
-            name, image=image, flavor=flavor)
+        server = self.connection.create_server(name, image=image, flavor=flavor)
         self.connection.wait_for_server(server)
         self._servers.append(server)
 
@@ -81,10 +79,12 @@ class OpenStackProvider(PhoronixProvider):
             with SSHConnection(DEFAULT_USER, ip) as ssh:
                 # transfer all files from local to the remote phoronix directory
                 with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=True) as tmp:
-                    run(["tar", "zcvf", tmp.name, "." ], check=True, cwd=suite_base)
+                    run(["tar", "zcvf", tmp.name, "."], check=True, cwd=suite_base)
                     ssh.put(tmp.name, "/home/ubuntu")
                     ssh.execute("mkdir -p /home/ubuntu/pts")
-                    ssh.execute(f"tar xvf /home/ubuntu/{path.basename(tmp.name)} -C /home/ubuntu/pts")
+                    ssh.execute(
+                        f"tar xvf /home/ubuntu/{path.basename(tmp.name)} -C /home/ubuntu/pts"
+                    )
 
                 # run install script
                 ssh.execute("sh /home/ubuntu/pts/install.sh", sudo=True)
@@ -92,7 +92,6 @@ class OpenStackProvider(PhoronixProvider):
         except UnexpectedExit as err:
             print(err)
             return False
-
 
     def remove(self, event):
         """Remove Phoronix workers.
