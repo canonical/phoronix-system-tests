@@ -4,12 +4,15 @@
 import openstack
 
 from os import environ
+from os import path
+import tempfile
 
 from phoronix_provider import PhoronixProvider
 from ssh import PHORONIX_PUBLIC_KEY
 from ssh import PHORONIX_PRIVATE_KEY
 from ssh import SSHConnection
 from invoke.exceptions import UnexpectedExit
+from subprocess import run
 
 KEYPAIR_NAME = "local"
 DEFAULT_USER = "ubuntu"
@@ -73,15 +76,18 @@ class OpenStackProvider(PhoronixProvider):
     def setup_phoronix_suite(self, server_name):
         ip = self.__get_addr(server_name)
 
-        suite_base = environ[PHORONIX_BASE]
+        suite_base = path.abspath(environ[PHORONIX_BASE])
         try:
             with SSHConnection(DEFAULT_USER, ip) as ssh:
                 # transfer all files from local to the remote phoronix directory
+                with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=True) as tmp:
+                    run(["tar", "zcvf", tmp.name, "." ], check=True, cwd=suite_base)
+                    ssh.put(tmp.name, "/home/ubuntu")
+                    ssh.execute("mkdir -p /home/ubuntu/pts")
+                    ssh.execute(f"tar xvf /home/ubuntu/{path.basename(tmp.name)} -C /home/ubuntu/pts")
 
-                ssh.put(suite_base, "~", recursive=True)
-
-            # run install script
-            #
+                # run install script
+                ssh.execute("sh /home/ubuntu/pts/install.sh", sudo=True)
             return True
         except UnexpectedExit as err:
             print(err)
@@ -104,10 +110,10 @@ class OpenStackProvider(PhoronixProvider):
     def put(self, server, local_file, remote_file):
         pass
 
-    def run(self, server_name, command, **kwargs):
+    def execute(self, server_name, command, **kwargs):
         ip = self.__get_addr(server_name)
         with SSHConnection(DEFAULT_USER, ip) as ssh:
-            ssh.run(command, **kwargs)
+            ssh.execute(command, **kwargs)
 
     def benchmark(self, event):
         """Run benchmark on Phoronix workers.
