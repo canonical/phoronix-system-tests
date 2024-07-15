@@ -6,6 +6,7 @@ from subprocess import run
 
 import openstack
 from invoke.exceptions import UnexpectedExit
+from openstack.compute.v2.server import Server
 from phoronix_provider import PhoronixProvider
 from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHConnection
 
@@ -17,20 +18,23 @@ PHORONIX_BASE = "PHORONIX_BASE"
 class OpenStackProvider(PhoronixProvider):
     """OpenStack-based test run orchestrator."""
 
+    _servers: list[Server]
+
     def __get_addr(self, server_name):
         servers = [x for x in self._servers if x.name == server_name]
         if len(servers) == 0:
             raise RuntimeError(server_name + " not found")
-        return servers[0].addresses["net_instances"][0]["addr"]
+        return servers[0].addresses["net_instances"][0]["addr"]  # type: ignore
 
-    def install(self):
+    def install(self, config):
+        """Create openstack keypair and security rules."""
         keypair = self.connection.compute.find_keypair(KEYPAIR_NAME)
         if not keypair:
             keypair = self.connection.compute.create_keypair(name=KEYPAIR_NAME)
             with open(PHORONIX_PUBLIC_KEY, "w") as public_key_file:
-                public_key_file.write(keypair.public_key)
+                public_key_file.write(str(keypair.public_key))
             with open(PHORONIX_PRIVATE_KEY, "w") as private_key_file:
-                private_key_file.write(keypair.private_key)
+                private_key_file.write(str(keypair.private_key))
         #       try:
         self.connection.create_security_group_rule(
             "allow_ssh", protocol="tcp", port_range_min=22, port_range_max=22
@@ -55,7 +59,7 @@ class OpenStackProvider(PhoronixProvider):
             app_name="phoronix",
             app_version="1.0",
         )
-        self._servers = self.connection.list_servers()
+        self._servers = self.connection.list_servers()  # type: ignore
 
     def provision(self, event):
         """Provision Phoronix workers.
@@ -72,6 +76,11 @@ class OpenStackProvider(PhoronixProvider):
         self._servers.append(server)
 
     def setup_phoronix_suite(self, server_name):
+        """Set up Phoronix test suite on the specified server.
+
+        Args:
+            server_name (_type_): openstack server name
+        """
         ip = self.__get_addr(server_name)
 
         suite_base = path.abspath(environ[PHORONIX_BASE])
@@ -100,16 +109,21 @@ class OpenStackProvider(PhoronixProvider):
             event (_type_): _description_
         """
         for server in self._servers:
-            self.connection.delete_server(server, force=True)
+            self.connection.delete_server(server, wait=True)
         pass
 
     def list_servers(self):
+        """Return openstack server names."""
         return [x.name for x in self._servers]
 
-    def put(self, server, local_file, remote_file):
-        pass
-
     def execute(self, server_name, command, **kwargs):
+        """Execute command on the specified server.
+
+        Args:
+            server_name: name of the openstack server
+            command: command to execute
+            **kwargs: args
+        """
         ip = self.__get_addr(server_name)
         with SSHConnection(DEFAULT_USER, ip) as ssh:
             ssh.execute(command, **kwargs)
