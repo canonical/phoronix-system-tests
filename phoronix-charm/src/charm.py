@@ -53,7 +53,7 @@ class PhoronixCharmCharm(ops.CharmBase):
 
     def _on_install(self, event: ops.InstallEvent):
         self.provider.configure(self.config)
-        self.provider.install()
+        self.provider.install(self.config)
 
     def _on_config_changed(self, _):
         self.provider.configure(self.config)
