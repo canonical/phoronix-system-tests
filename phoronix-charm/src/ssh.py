@@ -1,5 +1,4 @@
-"""SSH wrapper for the worker machine connections.
-"""
+"""SSH wrapper for the worker machine connections."""
 
 import os
 from typing import Any
@@ -15,6 +14,7 @@ PHORONIX_PRIVATE_KEY = "phoronix-private.key"
 
 
 def install():
+    """Generate ssh keys."""
     if os.path.isfile(PHORONIX_PUBLIC_KEY) and os.path.isfile(PHORONIX_PRIVATE_KEY):
         return
 
@@ -51,11 +51,20 @@ def install():
 
 
 class SSHConnection:
+    """Wraps Fabric connection object."""
+
     def __init__(self, user: str, host: str):
+        """Init class.
+
+        Args:
+            user (str): username
+            host (str): hostname
+        """
         self._user = user
         self._host = host
 
     def __enter__(self):
+        """Create Fabric connection object."""
         config = Config(overrides={"sudo": {"password": "ubuntu"}})
         self.connection = Connection(
             host=self._host,
@@ -66,29 +75,34 @@ class SSHConnection:
         return self
 
     def __exit__(self, *args):
+        """Close Fabric connection."""
         self.connection.close()
 
     def execute(self, command: str, **kwargs: Any):
+        """Execute command.
+
+        Args:
+            command (str): command to execute
+            **kwargs: sudo: True/False, other kv args to Connection.run()
+        """
         if "sudo" in kwargs and kwargs["sudo"]:
             del kwargs["sudo"]
             return self.connection.sudo(command, **kwargs)
         return self.connection.run(command, **kwargs)
 
     def get(self, remote_file: str, local_file: str):
+        """Retrieve remote file."""
         self.connection.get(remote_file, local_file)
 
     def put(self, local_file: str, remote_file: str):
-        print(f"copy {local_file} to {remote_file}")
+        """Put file to remote."""
         self.connection.put(local_file, remote_file)
 
     def put_dir(self, local_dir: str, remote_dir: str):
+        """Put directory to remote."""
         self.execute(f"mkdir -p {remote_dir}")
         for root, dirs, files in os.walk(local_dir):
             for file in files:
                 self.put(os.path.join(root, file), os.path.join(remote_dir, file))
             for dir in dirs:
                 self.put_dir(os.path.join(root, dir), os.path.join(remote_dir, dir))
-
-
-if __name__ == "__main__":  # pragma: nocover
-    install()
