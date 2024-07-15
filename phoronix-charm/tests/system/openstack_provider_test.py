@@ -1,5 +1,4 @@
-"""Test openstack provider against live openstack
-"""
+"""Test openstack provider against live openstack."""
 
 import unittest
 from os import environ
@@ -10,16 +9,17 @@ from openstack_provider import OpenStackProvider
 class OpenStackProviderTest(unittest.TestCase):
 
     def setUp(self):
-        config = dict()
-        config["username"] = environ["OS_USERNAME"]
-        config["project_name"] = environ["OS_PROJECT_NAME"]
-        config["password"] = environ["OS_PASSWORD"]
-        config["auth_url"] = environ["OS_AUTH_URL"]
-        config["project_domain_name"] = environ["OS_PROJECT_DOMAIN_NAME"]
-        config["region_name"] = environ["OS_REGION_NAME"]
-        config["user_domain_name"] = environ["OS_USER_DOMAIN_NAME"]
-        config["identify_api_version"] = environ["OS_IDENTITY_API_VERSION"]
-        config["interface"] = environ["OS_INTERFACE"]
+        config = {
+            "username": environ["OS_USERNAME"],
+            "project_name": environ["OS_PROJECT_NAME"],
+            "password": environ["OS_PASSWORD"],
+            "auth_url": environ["OS_AUTH_URL"],
+            "project_domain_name": environ["OS_PROJECT_DOMAIN_NAME"],
+            "region_name": environ["OS_REGION_NAME"],
+            "user_domain_name": environ["OS_USER_DOMAIN_NAME"],
+            "identify_api_version": environ["OS_IDENTITY_API_VERSION"],
+            "interface": environ["OS_INTERFACE"],
+        }
 
         self.provider = OpenStackProvider()
         self.provider.configure(config)
