@@ -1,0 +1,10 @@
+Types: deb
+URIs: http://rebuild-test.ubuntu.com/ubuntu-test-rebuild-20240606-noble-o3/ubuntu/
+Suites: noble
+Components: main universe restricted multiverse
+
+Types: deb-src
+URIs: http://archive.ubuntu.com/ubuntu/
+Suites: noble
+Components: main universe restricted multiverse
+
