@@ -1,8 +1,8 @@
-"""Test run orchestrator interface."""
+"""Provisioning interface."""
 
 
-class PhoronixProvider:
-    """Test run orchestrator interface."""
+class ProvisioningProvider:
+    """Provisioning interface."""
 
     def install(self, config):
         """Install provider on the machine."""
@@ -16,24 +16,16 @@ class PhoronixProvider:
         """
         pass
 
-    def provision(self, event):
+    def provision(self, config) -> bool:
         """Provision Phoronix workers.
 
         Args:
-            event (_type_): _description_
+            config (_type_): _description_
         """
-        pass
+        return False
 
     def remove(self, event):
         """Remove Phoronix workers.
-
-        Args:
-            event (_type_): _description_
-        """
-        pass
-
-    def benchmark(self, event):
-        """Run benchmark on Phoronix workers.
 
         Args:
             event (_type_): _description_

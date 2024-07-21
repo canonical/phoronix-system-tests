@@ -8,7 +8,7 @@ import logging
 
 import ops
 from openstack_provider import OpenStackProvider
-from phoronix_provider import PhoronixProvider
+from provisioning_provider import ProvisioningProvider
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class PhoronixCharmCharm(ops.CharmBase):
     """Charm the application."""
 
-    provider: PhoronixProvider
+    provider: ProvisioningProvider
 
     def __init__(self, framework: ops.Framework):
         super().__init__(framework)

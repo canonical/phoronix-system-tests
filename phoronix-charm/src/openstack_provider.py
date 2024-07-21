@@ -1,27 +1,33 @@
 """OpenStack-based test run orchestrator."""
 
+import logging
 import tempfile
 from os import environ, path
 from subprocess import run
 
 import openstack
 from invoke.exceptions import UnexpectedExit
-from openstack.compute.v2.server import Server
-from phoronix_provider import PhoronixProvider
+from provisioning_provider import ProvisioningProvider
 from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHConnection
 
 KEYPAIR_NAME = "local"
 DEFAULT_USER = "ubuntu"
 PHORONIX_BASE = "PHORONIX_BASE"
 
+PROFILE = "profile"
+IMAGE = "image"
+FLAVOR = "flavor"
+SOURCES = "sources"
+KEY_NAME = "key_name"
 
-class OpenStackProvider(PhoronixProvider):
+logger = logging.getLogger(__name__)
+
+
+class OpenStackProvider(ProvisioningProvider):
     """OpenStack-based test run orchestrator."""
 
-    _servers: list[Server]
-
     def __get_addr(self, server_name):
-        servers = [x for x in self._servers if x.name == server_name]
+        servers = [x for x in self.connection.list_servers() if x.name == server_name]  # type: ignore
         if len(servers) == 0:
             raise RuntimeError(server_name + " not found")
         return servers[0].addresses["net_instances"][0]["addr"]  # type: ignore
@@ -59,21 +65,51 @@ class OpenStackProvider(PhoronixProvider):
             app_name="phoronix",
             app_version="1.0",
         )
-        self._servers = self.connection.list_servers()  # type: ignore
 
-    def provision(self, event):
+    def provision(self, config):
         """Provision Phoronix workers.
 
         Args:
-            event (_type_): _description_
+            config (dict): server configuration
+            profile-name:
+                image: <image-name-or-id>
+                flavor: <flavor>
+                sources: |
+                    Types: deb deb-src
+                    URIs: http://archive.ubuntu.com/ubuntu/
+                    Suites: noble
+                    Components: main universe restricted multiverse
         """
-        name = event.params["profile"]
-        image = event.params["image"]
-        flavor = event.params["flavor"]
-
-        server = self.connection.create_server(name, image=image, flavor=flavor)
+        name = config["profile"]
+        image = config["image"]
+        flavor = config["flavor"]
+        sources = config["sources"]
+        key_name = config["key_name"]
+        logger.info(f"Creating server {name}")
+        server = self.connection.create_server(name, image=image, flavor=flavor, key_name=key_name)
         self.connection.wait_for_server(server)
-        self._servers.append(server)
+        logger.info(f"Server {name} is active")
+        logger.info(f"Set ubuntu sources for  {name}")
+        self.replace_ubuntu_sources(name, sources)
+        logger.info(f"Setup Phoronix suite on {name}")
+        return self.setup_phoronix_suite(name)
+
+    def replace_ubuntu_sources(self, server_name, sources):
+        """Write ubuntu.sources to the target server.
+
+        Args:
+            server_name (str): name of the target server
+            sources (str): content of ubuntu.sources
+        """
+        ip = self.__get_addr(server_name)
+        with SSHConnection(DEFAULT_USER, ip) as ssh:
+            with tempfile.NamedTemporaryFile(delete=True) as tmp:
+                tmp.write(str.encode(sources))
+                ssh.put(tmp.name, "/home/ubuntu/ubuntu.sources")
+                ssh.execute("rm -f /etc/apt/sources.list")
+                ssh.execute("rm -rf /etc/apt/sources.list.d/*")
+                ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/")
+                ssh.execute("apt update")
 
     def setup_phoronix_suite(self, server_name):
         """Set up Phoronix test suite on the specified server.
@@ -108,13 +144,14 @@ class OpenStackProvider(PhoronixProvider):
         Args:
             event (_type_): _description_
         """
-        for server in self._servers:
+        servers = self.connection.list_servers()
+        for server in servers:
             self.connection.delete_server(server, wait=True)
         pass
 
     def list_servers(self):
         """Return openstack server names."""
-        return [x.name for x in self._servers]
+        return self.connection.list_servers()
 
     def execute(self, server_name, command, **kwargs):
         """Execute command on the specified server.
@@ -127,18 +164,3 @@ class OpenStackProvider(PhoronixProvider):
         ip = self.__get_addr(server_name)
         with SSHConnection(DEFAULT_USER, ip) as ssh:
             ssh.execute(command, **kwargs)
-
-    def benchmark(self, event):
-        """Run benchmark on Phoronix workers.
-
-        Args:
-            event (_type_): _description_
-        """
-        for server in self._servers:
-            print(server)
-        # connect to servers
-        # submit jobs
-        # wait for completion
-        # return results
-
-        pass
