@@ -1,0 +1,31 @@
+# Copyright 2024 Canonical Ltd.
+# See LICENSE file for licensing details.
+name: phoronix-tests
+display-name: Charmed Phoronix Test Suite
+description: |
+  This charm deploys and operates Phoronix Test Suite on a VM machines
+  environment.
+summary: Charmed Phoronix Test Suite
+docs: todo
+source: todo
+issues: todo
+website:
+  - todo
+maintainers:
+  - todo
+series:
+  - noble
+
+peers:
+  cluster:
+    interface: cluster
+  restart:
+    interface: rolling_op
+  upgrade:
+    interface: upgrade
+
+requires:
+
+provides:
+
+storage:
