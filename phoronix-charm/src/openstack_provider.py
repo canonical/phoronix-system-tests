@@ -1,14 +1,12 @@
 """OpenStack-based test run orchestrator."""
 
 import logging
-import tempfile
 from os import environ, path
 from subprocess import run
 
 import openstack
-from invoke.exceptions import UnexpectedExit
 from provisioning_provider import ProvisioningProvider
-from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHConnection
+from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHProvider, SSHConnection
 
 KEYPAIR_NAME = "local"
 DEFAULT_USER = "ubuntu"
@@ -25,6 +23,11 @@ logger = logging.getLogger(__name__)
 
 class OpenStackProvider(ProvisioningProvider):
     """OpenStack-based test run orchestrator."""
+
+    ssh_provider: SSHProvider
+
+    def __init__(self):
+        self.ssh_provider = SSHProvider()
 
     def __get_addr(self, server_name):
         servers = [x for x in self.connection.list_servers() if x.name == server_name]  # type: ignore
@@ -102,14 +105,7 @@ class OpenStackProvider(ProvisioningProvider):
             sources (str): content of ubuntu.sources
         """
         ip = self.__get_addr(server_name)
-        with SSHConnection(DEFAULT_USER, ip) as ssh:
-            with tempfile.NamedTemporaryFile(delete=True) as tmp:
-                tmp.write(str.encode(sources))
-                ssh.put(tmp.name, "/home/ubuntu/ubuntu.sources")
-                ssh.execute("rm -f /etc/apt/sources.list")
-                ssh.execute("rm -rf /etc/apt/sources.list.d/*")
-                ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/")
-                ssh.execute("apt update")
+        self.ssh_provider.setup_ubuntu_sources(DEFAULT_USER, ip, sources)
 
     def setup_phoronix_suite(self, server_name):
         """Set up Phoronix test suite on the specified server.
@@ -118,25 +114,8 @@ class OpenStackProvider(ProvisioningProvider):
             server_name (_type_): openstack server name
         """
         ip = self.__get_addr(server_name)
-
         suite_base = path.abspath(environ[PHORONIX_BASE])
-        try:
-            with SSHConnection(DEFAULT_USER, ip) as ssh:
-                # transfer all files from local to the remote phoronix directory
-                with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=True) as tmp:
-                    run(["tar", "zcvf", tmp.name, "."], check=True, cwd=suite_base)
-                    ssh.put(tmp.name, "/home/ubuntu")
-                    ssh.execute("mkdir -p /home/ubuntu/pts")
-                    ssh.execute(
-                        f"tar xvf /home/ubuntu/{path.basename(tmp.name)} -C /home/ubuntu/pts"
-                    )
-
-                # run install script
-                ssh.execute("sh /home/ubuntu/pts/install.sh", sudo=True)
-            return True
-        except UnexpectedExit as err:
-            print(err)
-            return False
+        return self.ssh_provider.setup_phoronix_suite(DEFAULT_USER, ip, suite_base)
 
     def remove(self, event):
         """Remove Phoronix workers.
@@ -162,5 +141,4 @@ class OpenStackProvider(ProvisioningProvider):
             **kwargs: args
         """
         ip = self.__get_addr(server_name)
-        with SSHConnection(DEFAULT_USER, ip) as ssh:
-            ssh.execute(command, **kwargs)
+        self.ssh_provider.execute(DEFAULT_USER, ip, command, **kwargs)

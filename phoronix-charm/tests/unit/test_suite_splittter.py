@@ -1,13 +1,13 @@
 import unittest
 
-from src.suite_splitter import split_suite
-from src.suite_splitter import merge_suite
+from src.suite_splitter import merge_suite, split_suite
+
 
 class TestSplitSuite(unittest.TestCase):
 
     def test_merge(self):
         text = "<TestResult><Result/></TestResult>"
-        input = [ text, text ]
+        input = [text, text]
         ret = merge_suite(input)
         self.assertEqual("<TestResult><Result /><Result /></TestResult>", ret)
 

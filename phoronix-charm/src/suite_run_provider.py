@@ -2,21 +2,36 @@
 
 import asyncio
 
-from src.suite_splitter import split_suite
-from src.suite_splitter import merge_suite
+from src.suite_splitter import merge_suite, split_suite
+from src.ssh import SSHProvider
+import random
+import string
 
 class TestProfile:
-    """List of hosts in the test profile"""
+    """List of hosts in the test profile."""
 
     hosts: list[str]
+    name: str
 
+    def __init__(self, name:str, hosts: list[str]):
+        self.hosts = hosts
+        self.name = name
 
 class SuiteRunProvider:
+    """Runs Phoronix test suite."""
+
+    user: str
+
+    def __init__(self, user, suite_base):
+        self.user = user
+        self.suite_base = suite_base
+
     async def run_suite(self, suite: str, profile: TestProfile) -> str:
         """Execute phoronix test suite.
 
         Args:
             suite (str): _description_
+            profile (TestProfile): profiles
 
         Returns:
             str: _description_
@@ -29,4 +44,9 @@ class SuiteRunProvider:
         return merge_suite([x.result() for x in tasks])
 
     async def run_suite_slice(self, suite: str, host: str) -> str:
-        pass
+        """Run part of the test suite."""
+        ssh_provider = SSHProvider()
+        ssh_provider.setup_phoronix_suite(self.user, host, self.suite_base)
+        slice_name = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
+        ssh_provider.setup_new_suite(self.user, host, slice_name, suite)
+        return ssh_provider.run_suite(self.user, host, slice_name, suite)

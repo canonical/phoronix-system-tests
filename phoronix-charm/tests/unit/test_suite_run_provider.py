@@ -1,6 +1,6 @@
+import asyncio
 import unittest
 
-import asyncio
 from src.suite_run_provider import SuiteRunProvider, TestProfile
 
 
@@ -8,9 +8,12 @@ class SuiteRunProviderMock(SuiteRunProvider):
     async def run_suite_slice(self, suite: str, host: str) -> str:
         return "<PhoronixTestSuite><Result></Result></PhoronixTestSuite>"
 
+
 class TestSuiteRunProvider(unittest.TestCase):
     def test_mock(self):
-        """Given a SuiteRunProviderMock
+        """Test Description.
+
+        Given a SuiteRunProviderMock
         When a profile with 2 hosts is run
         Then the whole suite is returned
         """

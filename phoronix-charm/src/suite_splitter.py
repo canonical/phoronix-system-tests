@@ -4,8 +4,9 @@ import copy
 import xml.etree.ElementTree as ElementTree
 from itertools import zip_longest
 
+
 def merge_suite(results: list[str]) -> str:
-    """Merge phoronix test results
+    """Merge phoronix test results.
 
     Args:
         results (list[str]): list of xml strings
@@ -14,7 +15,7 @@ def merge_suite(results: list[str]) -> str:
         str: merged xml
     """
     if len(results) == 0:
-        return 0
+        return str("")
     main = ElementTree.fromstring(results[0])
     for next in results[1:]:
         parsed = ElementTree.fromstring(next)
@@ -29,18 +30,18 @@ def split_suite(suite_text: str, chunks: int) -> list[str]:
 
     Args:
         suite_text (str): test suite xml
-        chunk_size (int): desired chunk size
+        chunks (int): number of chunks
 
-    Yields:
-        Generator[str, None, None]: chunk xml string
+    Returns:
+        list[str, None, None]: chunk xml string
     """
     suite = ElementTree.fromstring(suite_text)
     executions = [x for x in suite if x.tag == "Execute"]
     chunk_size = int(len(executions) / chunks) + 1
     suite_info = [x for x in suite if x.tag == "SuiteInformation"][0]
-    chunks = list(zip_longest(*[iter(executions)] * chunk_size, fillvalue=None))
+    execution_chunks = list(zip_longest(*[iter(executions)] * chunk_size, fillvalue=None))
     ret = []
-    for chunk in chunks:
+    for chunk in execution_chunks:
         suite_chunk = ElementTree.Element("PhoronixTestSuite")
         for execution in chunk:
             if execution is None:
