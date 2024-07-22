@@ -1,9 +1,16 @@
 import unittest
 
 from src.suite_splitter import split_suite
-
+from src.suite_splitter import merge_suite
 
 class TestSplitSuite(unittest.TestCase):
+
+    def test_merge(self):
+        text = "<TestResult><Result/></TestResult>"
+        input = [ text, text ]
+        ret = merge_suite(input)
+        self.assertEqual("<TestResult><Result /><Result /></TestResult>", ret)
+
     def test_split(self):
         text = """
 <PhoronixTestSuite>
@@ -47,7 +54,7 @@ class TestSplitSuite(unittest.TestCase):
             " ", ""
         )
 
-        suits = split_suite(text, 1)
+        suits = split_suite(text, 4)
         actual = suits[0].replace("\n", "").replace(" ", "")
         self.assertEqual(actual, expected)
         self.assertEqual(len(suits), 3)
