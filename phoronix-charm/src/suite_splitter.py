@@ -3,10 +3,9 @@
 import copy
 import xml.etree.ElementTree as ElementTree
 from itertools import zip_longest
-from typing import Generator
 
 
-def split_suite(suite_text: str, chunk_size: int) -> Generator[str, None, None]:
+def split_suite(suite_text: str, chunk_size: int) -> list[str]:
     """Split Phoronix test suite into chunks.
 
     Args:
@@ -17,12 +16,19 @@ def split_suite(suite_text: str, chunk_size: int) -> Generator[str, None, None]:
         Generator[str, None, None]: chunk xml string
     """
     suite = ElementTree.fromstring(suite_text)
+    for x in suite:
+        print("tag " + x.tag)
     executions = [x for x in suite if x.tag == "Execute"]
     suite_info = [x for x in suite if x.tag == "SuiteInformation"][0]
     chunks = list(zip_longest(*[iter(executions)] * chunk_size, fillvalue=None))
+    ret = []
     for chunk in chunks:
         suite_chunk = ElementTree.Element("PhoronixTestSuite")
-        suite_chunk.append(copy.deepcopy(suite_info))
         for execution in chunk:
+            if execution is None:
+                continue
             suite_chunk.append(copy.deepcopy(execution))
-        yield ElementTree.tostring(suite_chunk, encoding="utf-8").decode("utf-8")
+        if len(suite_chunk) > 0:
+            suite_chunk.append(copy.deepcopy(suite_info))
+            ret.append(ElementTree.tostring(suite_chunk, encoding="utf-8").decode("utf-8"))
+    return ret
