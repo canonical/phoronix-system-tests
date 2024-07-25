@@ -2,11 +2,10 @@
 
 import logging
 from os import environ, path
-from subprocess import run
 
 import openstack
 from provisioning_provider import ProvisioningProvider
-from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHProvider, SSHConnection
+from ssh import PHORONIX_PRIVATE_KEY, PHORONIX_PUBLIC_KEY, SSHProvider
 
 KEYPAIR_NAME = "local"
 DEFAULT_USER = "ubuntu"
