@@ -13,14 +13,13 @@ test-profile2:
 import argparse
 import asyncio
 from subprocess import run
-from suite_run_provider import TestProfile, SuiteRunProvider
 
 import yaml
+from suite_run_provider import SuiteRunProvider, TestProfile
+
 
 def run_test_suite():
-    """Runs Phoronix test suite using yaml configuration.
-
-    """
+    """Run Phoronix test suite using yaml configuration."""
     parser = argparse.ArgumentParser(
         prog="deploy", description="Deploy openstack server and install phoronix suite"
     )
@@ -39,7 +38,7 @@ def run_test_suite():
         config = yaml.safe_load(input)
         profiles = []
         for key in config.profiles.keys():
-            profiles.append(TestProfile(name = key, hosts=config[key]))
+            profiles.append(TestProfile(name=key, hosts=config[key]))
         runner = SuiteRunProvider(config.user, base)
         for profile in profiles:
             profile_result = asyncio.run(runner.run_suite(suite_text, profile))
