@@ -1,15 +1,16 @@
 """SSH wrapper for the worker machine connections."""
 
 import os
-from typing import Any
 import tempfile
-from invoke.exceptions import UnexpectedExit
+from os import path
+from subprocess import run
+from typing import Any
+
 from cryptography.hazmat.backends import default_backend as crypto_default_backend
 from cryptography.hazmat.primitives import serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from fabric import Config, Connection
-from subprocess import run
-from os import path
+from invoke.exceptions import UnexpectedExit
 
 PHORONIX_PUBLIC_KEY = "phoronix-public.key"
 
@@ -57,10 +58,25 @@ class SSHProvider:
     """Setup Phoronix suite over ssh."""
 
     def execute(self, user, ip, command, **kwargs):
+        """Execute command on remote.
+
+        Args:
+            user (_type_): username
+            ip (_type_): target host
+            command (_type_): command to run
+            **kwargs: additional args for Fabric
+        """
         with SSHConnection(user, ip) as ssh:
             ssh.execute(command, **kwargs)
 
-    def setup_ubuntu_sources(self, user: str, ip:str, sources: str):
+    def setup_ubuntu_sources(self, user: str, ip: str, sources: str):
+        """Setup Ubuntu sources files on remote host.
+
+        Args:
+            user (str): user
+            ip (str): remote host
+            sources (str): contents of ubuntu.sources
+        """
         with SSHConnection(user, ip) as ssh:
             with tempfile.NamedTemporaryFile(delete=True) as tmp:
                 tmp.write(str.encode(sources))
@@ -70,22 +86,58 @@ class SSHProvider:
                 ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/")
                 ssh.execute("apt update")
 
-    def run_suite(self, user: str, ip: str, suite_name:str) -> str:
+    def run_suite(self, user: str, ip: str, suite_name: str) -> str:
+        """Execute testsuite on remote host.
+
+        Args:
+            user (str): username
+            ip (str): remote host
+            suite_name (str): name of the test suite
+
+        Returns:
+            str: _description_
+        """
         with SSHConnection(user, ip) as ssh:
             ssh.execute(f"/bin/sh /home/ubuntu/pts/run.sh {suite_name}")
             with tempfile.NamedTemporaryFile(delete=True) as tmp:
-                ssh.get(f"/home/{user}/.phoronix-test-suite/test-results/{suite_name}/composite.xml", tmp.name)
+                ssh.get(
+                    f"/home/{user}/.phoronix-test-suite/test-results/{suite_name}/composite.xml",
+                    tmp.name,
+                )
                 with open(tmp.name, "r") as input:
                     return input.read()
 
-    def setup_new_suite(self, user: str, ip: str, suite_name:str, suite_text: str):
+    def setup_new_suite(self, user: str, ip: str, suite_name: str, suite_text: str):
+        """Setup new test suite on remote server.
+
+        Args:
+            user (str): username
+            ip (str): remote host
+            suite_name (str): test suite name
+            suite_text (str): content of the test suite
+        """
         with SSHConnection(user, ip) as ssh:
             with tempfile.NamedTemporaryFile(delete=True) as tmp:
-                    tmp.write(str.encode(suite_text))
-                    ssh.execute(f"mkdir -p /home/{user}/.phoronix-test-suite/test-results/test-suites/local/{suite_name}/")
-                    ssh.put(tmp.name, f"/home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/suite-definition.xml")
+                tmp.write(str.encode(suite_text))
+                ssh.execute(
+                    f"mkdir -p /home/{user}/.phoronix-test-suite/test-results/test-suites/local/{suite_name}/"
+                )
+                ssh.put(
+                    tmp.name,
+                    f"/home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/suite-definition.xml",
+                )
 
-    def setup_phoronix_suite(self, user: str, ip:str, suite_base:str ) -> bool:
+    def setup_phoronix_suite(self, user: str, ip: str, suite_base: str) -> bool:
+        """Install Phoronix test suite on remote host.
+
+        Args:
+            user (str): username
+            ip (str): target host
+            suite_base (str): location of test suite on local machine
+
+        Returns:
+            bool: success or failure
+        """
         try:
             with SSHConnection(user, ip) as ssh:
                 # transfer all files from local to the remote phoronix directory
@@ -103,7 +155,6 @@ class SSHProvider:
         except UnexpectedExit as err:
             print(err)
             return False
-
 
 
 class SSHConnection:
