@@ -29,6 +29,7 @@ extend-ignore = [
     "D407",
     "D408",
     "D409",
+    "D401",
     "D413",
 ]
 ignore = ["E501", "D107"]
@@ -43,4 +44,3 @@ skip = "build,lib,venv,icon.svg,.tox,.git,.mypy_cache,.ruff_cache,.coverage"
 
 [tool.pyright]
 include = ["src/**.py"]
-
