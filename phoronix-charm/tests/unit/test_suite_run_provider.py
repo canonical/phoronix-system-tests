@@ -17,7 +17,7 @@ class TestSuiteRunProvider(unittest.TestCase):
         When a profile with 2 hosts is run
         Then the whole suite is returned
         """
-        runner = SuiteRunProviderMock()
+        runner = SuiteRunProviderMock("ubuntu", ".")
         text = """
 <PhoronixTestSuite>
   <SuiteInformation>
@@ -41,8 +41,7 @@ class TestSuiteRunProvider(unittest.TestCase):
   </Execute>
 </PhoronixTestSuite>
         """
-        profile = TestProfile()
-        profile.hosts = ["test", "test"]
+        profile = TestProfile("test", ["test", "test"])
         result = asyncio.run(runner.run_suite(text, profile))
         expected = """<PhoronixTestSuite><Result/><Result/></PhoronixTestSuite>"""
         self.assertEqual(expected, result.replace("\n", "").replace(" ", ""))
