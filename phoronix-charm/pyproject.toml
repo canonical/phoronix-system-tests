@@ -44,3 +44,17 @@ skip = "build,lib,venv,icon.svg,.tox,.git,.mypy_cache,.ruff_cache,.coverage"
 
 [tool.pyright]
 include = ["src/**.py"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name ="phoronix-system-test"
+version = "0.0.1"
+dependencies = [
+    "openstacksdk",
+    "pyaml",
+    "fabric",
+    "ops"
+]
