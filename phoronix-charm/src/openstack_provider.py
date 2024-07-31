@@ -16,6 +16,7 @@ IMAGE = "image"
 FLAVOR = "flavor"
 SOURCES = "sources"
 KEY_NAME = "key_name"
+PROXY = "proxy"
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +77,7 @@ class OpenStackProvider(ProvisioningProvider):
             profile-name:
                 image: <image-name-or-id>
                 flavor: <flavor>
+                proxy: url
                 sources: |
                     Types: deb deb-src
                     URIs: http://archive.ubuntu.com/ubuntu/
@@ -87,14 +89,27 @@ class OpenStackProvider(ProvisioningProvider):
         flavor = config["flavor"]
         sources = config["sources"]
         key_name = config["key_name"]
+        proxy = config["proxy"]
         logger.info(f"Creating server {name}")
         server = self.connection.create_server(name, image=image, flavor=flavor, key_name=key_name)
         self.connection.wait_for_server(server)
         logger.info(f"Server {name} is active")
+        self.set_proxy_environment(name, proxy)
         logger.info(f"Set ubuntu sources for  {name}")
         self.replace_ubuntu_sources(name, sources)
         logger.info(f"Setup Phoronix suite on {name}")
         return self.setup_phoronix_suite(name)
+
+    def set_proxy_environment(self, server_name, proxy):
+        """Add proxy url to .bashrc.
+
+        Args:
+            server_name (str): server ip
+            proxy (str): proxy url
+        """
+        ip = self.__get_addr(server_name)
+        self.ssh_provider.execute(DEFAULT_USER, ip, f"echo export https_proxy={proxy} >> ~/.bashrc" )
+        self.ssh_provider.execute(DEFAULT_USER, ip, f"echo export http_proxy={proxy} >> ~/.bashrc" )
 
     def replace_ubuntu_sources(self, server_name, sources):
         """Write ubuntu.sources to the target server.
