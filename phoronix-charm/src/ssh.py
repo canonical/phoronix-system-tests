@@ -80,11 +80,12 @@ class SSHProvider:
         with SSHConnection(user, ip) as ssh:
             with tempfile.NamedTemporaryFile(delete=True) as tmp:
                 tmp.write(str.encode(sources))
+                tmp.flush()
                 ssh.put(tmp.name, "/home/ubuntu/ubuntu.sources")
-                ssh.execute("rm -f /etc/apt/sources.list")
-                ssh.execute("rm -rf /etc/apt/sources.list.d/*")
-                ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/")
-                ssh.execute("apt update")
+                ssh.execute("rm -f /etc/apt/sources.list", sudo=True)
+                ssh.execute("rm -rf /etc/apt/sources.list.d/*", sudo=True)
+                ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/", sudo=True)
+                ssh.execute("apt update", sudo=True)
 
     def run_suite(self, user: str, ip: str, suite_name: str) -> str:
         """Execute testsuite on remote host.
@@ -119,8 +120,9 @@ class SSHProvider:
         with SSHConnection(user, ip) as ssh:
             with tempfile.NamedTemporaryFile(delete=True) as tmp:
                 tmp.write(str.encode(suite_text))
+                tmp.flush()
                 ssh.execute(
-                    f"mkdir -p /home/{user}/.phoronix-test-suite/test-results/test-suites/local/{suite_name}/"
+                    f"mkdir -p /home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/"
                 )
                 ssh.put(
                     tmp.name,
@@ -150,7 +152,7 @@ class SSHProvider:
                     )
 
                 # run install script
-                ssh.execute("sh /home/ubuntu/pts/install.sh", sudo=True)
+                ssh.execute("sh -c 'cd /home/ubuntu/pts && sh install.sh'")
             return True
         except UnexpectedExit as err:
             print(err)
