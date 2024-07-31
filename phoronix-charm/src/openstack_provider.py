@@ -91,8 +91,17 @@ class OpenStackProvider(ProvisioningProvider):
         key_name = config["key_name"]
         proxy = config["proxy"]
         logger.info(f"Creating server {name}")
-        server = self.connection.create_server(name, image=image, flavor=flavor, key_name=key_name)
-        self.connection.wait_for_server(server)
+        # check that the server is provisioned.
+        # if not, try to create it
+        # edge case/not supported: server exists but the ip is not assigned
+        try:
+            _ = self.__get_addr(name)
+        except:
+            try:
+                server = self.connection.create_server(name, image=image, flavor=flavor, key_name=key_name)
+                self.connection.wait_for_server(server)
+            except:
+                print(f"Server result {server}")
         logger.info(f"Server {name} is active")
         self.set_proxy_environment(name, proxy)
         logger.info(f"Set ubuntu sources for  {name}")
