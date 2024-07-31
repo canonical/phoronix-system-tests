@@ -42,13 +42,14 @@ class SuiteRunProvider:
         slices = split_suite(suite, len(profile.hosts))
         async with asyncio.TaskGroup() as tg:
             for host, suite_slice in zip(profile.hosts, slices):
-                tasks.append(tg.create_task(self.run_suite_slice(suite_slice, host)))
+                ssh_provider = SSHProvider()
+                ssh_provider.setup_phoronix_suite(self.user, host, self.suite_base)
+                slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
+                ssh_provider.setup_new_suite(self.user, host, slice_name, suite_slice)
+                tasks.append(tg.create_task(self.run_suite_slice(slice_name, host)))
         return merge_suite([x.result() for x in tasks])
 
     async def run_suite_slice(self, suite: str, host: str) -> str:
         """Run part of the test suite."""
         ssh_provider = SSHProvider()
-        ssh_provider.setup_phoronix_suite(self.user, host, self.suite_base)
-        slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
-        ssh_provider.setup_new_suite(self.user, host, slice_name, suite)
-        return ssh_provider.run_suite(self.user, host, slice_name)
+        return ssh_provider.run_suite(self.user, host, suite)
