@@ -33,7 +33,8 @@ class OpenStackProvider(ProvisioningProvider):
         servers = [x for x in self.connection.list_servers() if x.name == server_name]  # type: ignore
         if len(servers) == 0:
             raise RuntimeError(server_name + " not found")
-        return servers[0].addresses["net_instances"][0]["addr"]  # type: ignore
+        key = next(iter(servers[0].addresses.keys()))# type: ignore
+        return servers[0].addresses[key][0]["addr"]  # type: ignore
 
     def install(self, config):
         """Create openstack keypair and security rules."""
