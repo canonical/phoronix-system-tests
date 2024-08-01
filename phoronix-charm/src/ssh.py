@@ -85,6 +85,7 @@ class SSHProvider:
                 ssh.execute("rm -f /etc/apt/sources.list", sudo=True)
                 ssh.execute("rm -rf /etc/apt/sources.list.d/*", sudo=True)
                 ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/", sudo=True)
+                ssh.execute("chmod 0644 /etc/apt/sources.list.d/", sudo=True)
                 ssh.execute("apt update", sudo=True)
 
     def run_suite(self, user: str, ip: str, suite_name: str) -> str:
@@ -118,16 +119,18 @@ class SSHProvider:
             suite_text (str): content of the test suite
         """
         with SSHConnection(user, ip) as ssh:
-            with tempfile.NamedTemporaryFile(delete=True) as tmp:
-                tmp.write(str.encode(suite_text))
-                tmp.flush()
-                ssh.execute(
-                    f"mkdir -p /home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/"
-                )
-                ssh.put(
-                    tmp.name,
-                    f"/home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/suite-definition.xml",
-                )
+            _, filepath= tempfile.mkstemp(suffix=None, prefix=None, dir=None, text=False)
+            with open(filepath, "w") as tmp:
+                tmp.write(suite_text)
+                tmp.close()
+            ssh.execute(
+                f"mkdir -p /home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/"
+            )
+            ssh.put(
+                filepath,
+                f"/home/{user}/.phoronix-test-suite/test-suites/local/{suite_name}/suite-definition.xml",
+            )
+            os.remove(filepath)
 
     def setup_phoronix_suite(self, user: str, ip: str, suite_base: str) -> bool:
         """Install Phoronix test suite on remote host.
