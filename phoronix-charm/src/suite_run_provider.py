@@ -1,6 +1,5 @@
 """Test Runner."""
 
-import asyncio
 import random
 import string
 
@@ -28,7 +27,7 @@ class SuiteRunProvider:
         self.user = user
         self.suite_base = suite_base
 
-    async def run_suite(self, suite: str, profile: TestProfile) -> str:
+    def run_suite(self, suite: str, profile: TestProfile) -> str:
         """Execute phoronix test suite.
 
         Args:
@@ -40,12 +39,11 @@ class SuiteRunProvider:
         """
         tasks = []
         slices = split_suite(suite, len(profile.hosts))
-        async with asyncio.TaskGroup() as tg:
-            for host, suite_slice in zip(profile.hosts, slices):
-                slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
-                self.setup_new_suite(host, slice_name, suite_slice)
-                tasks.append(tg.create_task(self.run_suite_slice(slice_name, host)))
-        return merge_suite([x.result() for x in tasks])
+        for host, suite_slice in zip(profile.hosts, slices):
+            slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
+            self.setup_new_suite(host, slice_name, suite_slice)
+            tasks.append(self.run_suite_slice(slice_name, host))
+        return merge_suite(tasks)
 
     def setup_new_suite(self, host: str, slice_name: str, suite_slice: str):
         """Setup phoronix suite on a remote machine.
@@ -58,7 +56,7 @@ class SuiteRunProvider:
         ssh_provider = SSHProvider()
         ssh_provider.setup_new_suite(self.user, host, slice_name, suite_slice)
 
-    async def run_suite_slice(self, suite: str, host: str) -> str:
+    def run_suite_slice(self, suite: str, host: str) -> str:
         """Run part of the test suite."""
         ssh_provider = SSHProvider()
         return ssh_provider.run_suite(self.user, host, suite)

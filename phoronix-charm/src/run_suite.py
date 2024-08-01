@@ -11,7 +11,6 @@ test-profile2:
     - ip3
 """
 import argparse
-import asyncio
 from subprocess import run
 
 import yaml
@@ -41,7 +40,7 @@ def run_test_suite():
             profiles.append(TestProfile(name=key, hosts=config["profiles"][key]))
         runner = SuiteRunProvider(config["user"], base)
         for profile in profiles:
-            profile_result = asyncio.run(runner.run_suite(suite_text, profile))
+            profile_result = runner.run_suite(suite_text, profile)
             run(f"mkdir -p {profile.name}")
             with open(f"{profile.name}/composite.xml", "w") as result_file:
                 result_file.write(profile_result)
