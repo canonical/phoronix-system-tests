@@ -8,6 +8,9 @@ class SuiteRunProviderMock(SuiteRunProvider):
     async def run_suite_slice(self, suite: str, host: str) -> str:
         return "<PhoronixTestSuite><Result></Result></PhoronixTestSuite>"
 
+    def setup_new_suite(self, host: str, slice_name: str, suite_slice: str):
+        pass
+
 
 class TestSuiteRunProvider(unittest.TestCase):
     def test_mock(self):

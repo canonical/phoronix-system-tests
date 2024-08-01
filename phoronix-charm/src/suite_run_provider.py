@@ -4,8 +4,8 @@ import asyncio
 import random
 import string
 
-from src.ssh import SSHProvider
-from src.suite_splitter import merge_suite, split_suite
+from ssh import SSHProvider
+from suite_splitter import merge_suite, split_suite
 
 
 class TestProfile:
@@ -42,12 +42,21 @@ class SuiteRunProvider:
         slices = split_suite(suite, len(profile.hosts))
         async with asyncio.TaskGroup() as tg:
             for host, suite_slice in zip(profile.hosts, slices):
-                ssh_provider = SSHProvider()
-                ssh_provider.setup_phoronix_suite(self.user, host, self.suite_base)
                 slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
-                ssh_provider.setup_new_suite(self.user, host, slice_name, suite_slice)
+                self.setup_new_suite(host, slice_name, suite_slice)
                 tasks.append(tg.create_task(self.run_suite_slice(slice_name, host)))
         return merge_suite([x.result() for x in tasks])
+
+    def setup_new_suite(self, host: str, slice_name: str, suite_slice: str):
+        """Setup phoronix suite on a remote machine.
+
+        Args:
+            host (str): remote host
+            slice_name (str): name of the suite
+            suite_slice (str): suite contents
+        """
+        ssh_provider = SSHProvider()
+        ssh_provider.setup_new_suite(self.user, host, slice_name, suite_slice)
 
     async def run_suite_slice(self, suite: str, host: str) -> str:
         """Run part of the test suite."""
