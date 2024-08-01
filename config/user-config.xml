@@ -65,8 +65,8 @@
       <NoInternetCommunication>FALSE</NoInternetCommunication>
       <NoNetworkCommunication>FALSE</NoNetworkCommunication>
       <Timeout>20</Timeout>
-      <ProxyAddress></ProxyAddress>
-      <ProxyPort></ProxyPort>
+      <ProxyAddress>http://squid.ps6.internal</ProxyAddress>
+      <ProxyPort>3128</ProxyPort>
       <ProxyUser></ProxyUser>
       <ProxyPassword></ProxyPassword>
     </Networking>
