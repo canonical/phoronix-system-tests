@@ -119,7 +119,7 @@ class SSHProvider:
             suite_text (str): content of the test suite
         """
         with SSHConnection(user, ip) as ssh:
-            _, filepath= tempfile.mkstemp(suffix=None, prefix=None, dir=None, text=False)
+            _, filepath = tempfile.mkstemp(suffix=None, prefix=None, dir=None, text=False)
             with open(filepath, "w") as tmp:
                 tmp.write(suite_text)
                 tmp.close()

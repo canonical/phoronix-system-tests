@@ -33,7 +33,7 @@ class OpenStackProvider(ProvisioningProvider):
         servers = [x for x in self.connection.list_servers() if x.name == server_name]  # type: ignore
         if len(servers) == 0:
             raise RuntimeError(server_name + " not found")
-        key = next(iter(servers[0].addresses.keys()))# type: ignore
+        key = next(iter(servers[0].addresses.keys()))  # type: ignore
         return servers[0].addresses[key][0]["addr"]  # type: ignore
 
     def install(self, config):
@@ -98,8 +98,11 @@ class OpenStackProvider(ProvisioningProvider):
         try:
             _ = self.__get_addr(name)
         except:
+            server = None
             try:
-                server = self.connection.create_server(name, image=image, flavor=flavor, key_name=key_name)
+                server = self.connection.create_server(
+                    name, image=image, flavor=flavor, key_name=key_name
+                )
                 self.connection.wait_for_server(server)
             except:
                 print(f"Server result {server}")
@@ -118,8 +121,10 @@ class OpenStackProvider(ProvisioningProvider):
             proxy (str): proxy url
         """
         ip = self.__get_addr(server_name)
-        self.ssh_provider.execute(DEFAULT_USER, ip, f"echo export https_proxy={proxy} >> ~/.bashrc" )
-        self.ssh_provider.execute(DEFAULT_USER, ip, f"echo export http_proxy={proxy} >> ~/.bashrc" )
+        self.ssh_provider.execute(
+            DEFAULT_USER, ip, f"echo export https_proxy={proxy} >> ~/.bashrc"
+        )
+        self.ssh_provider.execute(DEFAULT_USER, ip, f"echo export http_proxy={proxy} >> ~/.bashrc")
 
     def replace_ubuntu_sources(self, server_name, sources):
         """Write ubuntu.sources to the target server.

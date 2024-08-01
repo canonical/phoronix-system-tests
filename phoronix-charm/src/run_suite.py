@@ -37,9 +37,9 @@ def run_test_suite():
     with open(args.config, "r") as input:
         config = yaml.safe_load(input)
         profiles = []
-        for key in config['profiles'].keys():
-            profiles.append(TestProfile(name=key, hosts=config['profiles'][key]))
-        runner = SuiteRunProvider(config['user'], base)
+        for key in config["profiles"].keys():
+            profiles.append(TestProfile(name=key, hosts=config["profiles"][key]))
+        runner = SuiteRunProvider(config["user"], base)
         for profile in profiles:
             profile_result = asyncio.run(runner.run_suite(suite_text, profile))
             run(f"mkdir -p {profile.name}")
