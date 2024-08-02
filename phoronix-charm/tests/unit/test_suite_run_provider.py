@@ -4,7 +4,7 @@ from src.suite_run_provider import SuiteRunProvider, TestProfile
 
 
 class SuiteRunProviderMock(SuiteRunProvider):
-    def run_suite_slice(self, suite: str, host: str) -> str:
+    def run_suite_slice(self, suite: str, host: str, profile: str) -> str:
         return "<PhoronixTestSuite><Result></Result></PhoronixTestSuite>"
 
     def setup_new_suite(self, host: str, slice_name: str, suite_slice: str):
@@ -44,6 +44,6 @@ class TestSuiteRunProvider(unittest.TestCase):
 </PhoronixTestSuite>
         """
         profile = TestProfile("test", ["test", "test"])
-        result = runner.run_suite(text, profile)
+        result = runner.run_suite("profile-id", text, profile)
         expected = """<PhoronixTestSuite><Result/><Result/></PhoronixTestSuite>"""
         self.assertEqual(expected, result.replace("\n", "").replace(" ", ""))

@@ -88,26 +88,29 @@ class SSHProvider:
                 ssh.execute("chmod 0644 /etc/apt/sources.list.d/", sudo=True)
                 ssh.execute("apt update", sudo=True)
 
-    def run_suite(self, user: str, ip: str, suite_name: str) -> str:
+    def run_suite(self, user: str, ip: str, suite_name: str, profile_name: str) -> str:
         """Execute testsuite on remote host.
 
         Args:
             user (str): username
             ip (str): remote host
             suite_name (str): name of the test suite
+            profile_name (str): test id
 
         Returns:
             str: _description_
         """
         with SSHConnection(user, ip) as ssh:
-            ssh.execute(f"/bin/sh /home/ubuntu/pts/run.sh {suite_name}")
-            with tempfile.NamedTemporaryFile(delete=True) as tmp:
-                ssh.get(
-                    f"/home/{user}/.phoronix-test-suite/test-results/{suite_name}/composite.xml",
-                    tmp.name,
-                )
-                with open(tmp.name, "r") as input:
-                    return input.read()
+            ssh.execute(f"/bin/sh /home/ubuntu/pts/run.sh {suite_name} {profile_name}")
+            _, filepath = tempfile.mkstemp(suffix=None, prefix=None, dir=None, text=False)
+            ssh.get(
+                f"/home/{user}/.phoronix-test-suite/test-results/{profile_name}/composite.xml",
+                filepath,
+            )
+            with open(filepath, "r") as input:
+                ret = input.read()
+            os.remove(filepath)
+            return ret
 
     def setup_new_suite(self, user: str, ip: str, suite_name: str, suite_text: str):
         """Setup new test suite on remote server.
