@@ -18,13 +18,17 @@ class TestProfile:
         self.hosts = hosts
         self.name = name
 
+
 class WorkItem:
+    """Test suite work item."""
+
     host: str
     slice_text: str
 
-    def __init__(self, host:str, slice_text:str):
+    def __init__(self, host: str, slice_text: str):
         self.host = host
         self.slice_text = slice_text
+
 
 class SuiteRunProvider:
     """Runs Phoronix test suite."""
@@ -49,7 +53,7 @@ class SuiteRunProvider:
 
         result = []
 
-        mapping = [WorkItem(host,slice) for host,slice in zip(profile.hosts, slices)]
+        mapping = [WorkItem(host, slice) for host, slice in zip(profile.hosts, slices)]
         with Pool(len(slices)) as pool:
             result = pool.map(self.worker, mapping)
         return merge_suite(result)
