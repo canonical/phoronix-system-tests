@@ -11,7 +11,7 @@ test-profile2:
     - ip3
 """
 import argparse
-from subprocess import run
+from os import makedirs
 
 import yaml
 from suite_run_provider import SuiteRunProvider, TestProfile
@@ -41,7 +41,7 @@ def run_test_suite():
         runner = SuiteRunProvider(config["user"], base)
         for profile in profiles:
             profile_result = runner.run_suite(profile.name, suite_text, profile)
-            run(f"mkdir -p {profile.name}")
+            makedirs(profile.name)
             with open(f"{profile.name}/composite.xml", "w") as result_file:
                 result_file.write(profile_result)
 
