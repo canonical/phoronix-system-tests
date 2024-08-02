@@ -2,6 +2,7 @@
 
 import random
 import string
+from multiprocessing import Pool
 
 from ssh import SSHProvider
 from suite_splitter import merge_suite, split_suite
@@ -17,6 +18,13 @@ class TestProfile:
         self.hosts = hosts
         self.name = name
 
+class WorkItem:
+    host: str
+    slice_text: str
+
+    def __init__(self, host:str, slice_text:str):
+        self.host = host
+        self.slice_text = slice_text
 
 class SuiteRunProvider:
     """Runs Phoronix test suite."""
@@ -37,13 +45,24 @@ class SuiteRunProvider:
         Returns:
             str: _description_
         """
-        tasks = []
         slices = split_suite(suite, len(profile.hosts))
-        for host, suite_slice in zip(profile.hosts, slices):
-            slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
-            self.setup_new_suite(host, slice_name, suite_slice)
-            tasks.append(self.run_suite_slice(slice_name, host))
-        return merge_suite(tasks)
+
+        result = []
+
+        mapping = [WorkItem(host,slice) for host,slice in zip(profile.hosts, slices)]
+        with Pool(len(slices)) as pool:
+            result = pool.map(self.worker, mapping)
+        return merge_suite(result)
+
+    def worker(self, item: WorkItem):
+        """Worker for the suite execution.
+
+        Args:
+            item (WorkItem): work item to process
+        """
+        slice_name = "".join(random.choices(string.ascii_uppercase + string.digits, k=12))
+        self.setup_new_suite(item.host, slice_name, item.slice_text)
+        return self.run_suite_slice(slice_name, item.host)
 
     def setup_new_suite(self, host: str, slice_name: str, suite_slice: str):
         """Setup phoronix suite on a remote machine.
