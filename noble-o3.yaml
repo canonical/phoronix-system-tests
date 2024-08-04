@@ -1,0 +1,17 @@
+# This template allows to configure noble vm with -O3 enabled
+
+noble-o3:
+  flavor: staging-cpu4-ram8-disk100
+  image: noble-o3
+  key_name: phoronix
+  proxy: http://squid.ps6.internal:3128/
+  sources: |
+    Types: deb-src
+    URIs: http://archive.ubuntu.com/ubuntu/
+    Suites: noble
+    Components: main universe restricted multiverse
+
+    Types: deb
+    URIs: http://rebuild-test.ubuntu.com/ubuntu-test-rebuild-20240606-noble-o3/ubuntu/
+    Suites: noble
+    Components: main universe restricted multiverse
