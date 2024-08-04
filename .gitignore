@@ -1,0 +1,7 @@
+phoronix-charm/phoronix-private.key
+phoronix-charm/phoronix-public.key
+phoronix-charm/log.txt
+*.egg-info
+phoronix-charm/deploy.sh
+phoronix-charm/dist/
+phoronix-charm/dist/

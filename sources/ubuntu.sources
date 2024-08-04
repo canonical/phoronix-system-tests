@@ -1,0 +1,4 @@
+Types: deb deb-src
+URIs: http://archive.ubuntu.com/ubuntu/
+Suites: noble
+Components: main universe restricted multiverse

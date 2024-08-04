@@ -1,0 +1,6 @@
+# configure sets of machines to run test against
+user: ubuntu
+profiles:
+  noble-o3:
+    - 10.142.110.8
+    - 10.142.110.195

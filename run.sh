@@ -1,8 +1,8 @@
 #!/bin/sh
 
 host=`hostname`
-export TEST_RESULTS_IDENTIFIER=$host-id
-export TEST_RESULTS_NAME=$host--name
+export TEST_RESULTS_NAME="${2}"
+export TEST_RESULTS_IDENTIFIER="${2}"
 export TEST_RESULTS_DESCRIPTION="${host} result"
 
 # Don't let the device overheat and throttle

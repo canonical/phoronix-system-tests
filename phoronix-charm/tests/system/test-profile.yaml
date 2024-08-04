@@ -1,0 +1,10 @@
+test-profile:
+  flavor: cpu1-ram4-disk50
+  image: ubuntu/ubuntu-noble-24.04-amd64-server-20240628-disk1.img
+  key_name: ubuntu
+  proxy:  http://squid.ps6.internal:3128/
+  sources: |
+    Types: deb deb-src
+    URIs: http://archive.ubuntu.com/ubuntu/
+    Suites: noble
+    Components: main universe restricted multiverse
