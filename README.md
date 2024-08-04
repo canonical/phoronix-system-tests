@@ -72,5 +72,5 @@ The Phoronix test suite configured as a submodule contains a [patch](https://git
 
 - Charm the orchestrator so that it can be deployed using the terraform profile. 
 - Automate test runner discovery by querying the deployed image.
-
+- Configure CI
 
