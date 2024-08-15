@@ -22,5 +22,5 @@ do
     do_test \$i &
     pids=\"\$pids \$!\"
 done
-wait \$pids" > sqlite-benchmark
-chmod +x sqlite-benchmark
+wait \$pids" >  distro-sqlite-benchmark
+chmod +x  distro-sqlite-benchmark

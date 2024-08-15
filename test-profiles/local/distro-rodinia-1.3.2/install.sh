@@ -68,5 +68,5 @@ case \$@ in
 	;;
 esac
 
-echo \$? > ~/test-exit-status" > rodinia
-chmod +x rodinia
+echo \$? > ~/test-exit-status" >  distro-rodinia
+chmod +x  distro-rodinia

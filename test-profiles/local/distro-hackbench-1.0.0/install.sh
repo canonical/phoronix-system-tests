@@ -6,5 +6,5 @@ echo $? > ~/install-exit-status
 
 echo "#!/bin/sh
 ./hackbench_bin \$@ > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status" > hackbench
-chmod +x hackbench
+echo \$? > ~/test-exit-status" >  distro-hackbench
+chmod +x  distro-hackbench

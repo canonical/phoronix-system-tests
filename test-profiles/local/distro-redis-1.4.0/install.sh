@@ -23,5 +23,5 @@ sleep 6
 
 ./src/redis-benchmark \$@ > \$LOG_FILE
 kill \$REDIS_SERVER_PID
-sed \"s/\\\"/ /g\" -i \$LOG_FILE" > redis
-chmod +x redis
+sed \"s/\\\"/ /g\" -i \$LOG_FILE" >  distro-redis
+chmod +x  distro-redis

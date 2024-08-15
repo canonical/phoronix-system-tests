@@ -10,5 +10,5 @@ cd ~
 echo "#!/bin/sh
 cd glibc-2.39/build-tree/amd64-libc/benchtests
 LC_ALL=C ./\$@ > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status" > glibc-bench
-chmod +x glibc-bench
+echo \$? > ~/test-exit-status" >  distro-glibc-bench
+chmod +x  distro-glibc-bench

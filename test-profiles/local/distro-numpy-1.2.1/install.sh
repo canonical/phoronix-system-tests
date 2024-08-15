@@ -22,5 +22,5 @@ cd numpy-benchmarks-master/
 python3 run.py -t python -p python3 > numpy_log
 echo \$? > ~/test-exit-status
 cat numpy_log > \$LOG_FILE
-python3 ../result_parser.py numpy_log >> \$LOG_FILE" > numpy
-chmod +x numpy
+python3 ../result_parser.py numpy_log >> \$LOG_FILE" >  distro-numpy
+chmod +x  distro-numpy

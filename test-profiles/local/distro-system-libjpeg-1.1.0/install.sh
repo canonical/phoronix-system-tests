@@ -6,7 +6,7 @@ convert misc/4.2.03.tiff mandrill.jpeg
 DJPG=`which djpeg`
 echo $? > ~/install-exit-status
 
-cat > system-libjpeg << EOT
+cat >  distro-system-libjpeg << EOT
 #!/bin/sh
 
 case \"\$1\" in
@@ -28,4 +28,4 @@ ET=\`date +%s.%N\`
 echo "(\$ET - \$ST) * 1000" | bc > \$LOG_FILE
 EOT
 
-chmod +x system-libjpeg
+chmod +x  distro-system-libjpeg

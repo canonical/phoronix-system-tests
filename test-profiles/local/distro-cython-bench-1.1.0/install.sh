@@ -9,5 +9,5 @@ cd ~
 echo "#!/bin/sh
 cd cython-0.29.21/Demos/benchmarks
 python3 -c 'import nqueens;print(nqueens.test_n_queens(1000))' > \$LOG_FILE
-echo \$? > ~/test-exit-status" > cython-bench 
-chmod +x cython-bench
+echo \$? > ~/test-exit-status" >  distro-cython-bench 
+chmod +x  distro-cython-bench

@@ -15,5 +15,5 @@ echo $? > ~/install-exit-status
 
 echo "#!/bin/sh
 ./himenobmtxpa s > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status" > himeno
-chmod +x himeno
+echo \$? > ~/test-exit-status" >  distro-himeno
+chmod +x  distro-himeno

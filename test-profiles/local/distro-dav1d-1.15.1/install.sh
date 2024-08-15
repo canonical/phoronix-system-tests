@@ -12,5 +12,5 @@ echo $? > ~/install-exit-status
 cd ~
 echo "#!/bin/sh
 /usr/bin/dav1d \$@ --muxer null --threads \$NUM_CPU_CORES --filmgrain 0 > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status" > dav1d
-chmod +x dav1d
+echo \$? > ~/test-exit-status" >  distro-dav1d
+chmod +x  distro-dav1d
