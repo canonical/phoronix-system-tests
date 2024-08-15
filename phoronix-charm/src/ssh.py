@@ -85,6 +85,7 @@ class SSHProvider:
                 ssh.execute("rm -f /etc/apt/sources.list", sudo=True)
                 ssh.execute("rm -rf /etc/apt/sources.list.d/*", sudo=True)
                 ssh.execute("cp /home/ubuntu/ubuntu.sources /etc/apt/sources.list.d/", sudo=True)
+                ssh.execute("chmod 0755 /etc/apt/sources.list.d", sudo=True)
                 ssh.execute("chmod 0644 /etc/apt/sources.list.d/ubuntu.sources", sudo=True)
                 ssh.execute("apt update", sudo=True)
 
