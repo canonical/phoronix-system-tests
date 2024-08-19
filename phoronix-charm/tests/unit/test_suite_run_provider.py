@@ -10,6 +10,9 @@ class SuiteRunProviderMock(SuiteRunProvider):
     def setup_new_suite(self, host: str, slice_name: str, suite_slice: str):
         pass
 
+    def _check_host(self, host: str):
+        pass
+
 
 class TestSuiteRunProvider(unittest.TestCase):
     def test_mock(self):

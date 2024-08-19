@@ -36,10 +36,15 @@ class SuiteRunProvider:
     """Runs Phoronix test suite."""
 
     user: str
+    provider = SSHProvider()
 
     def __init__(self, user, suite_base):
         self.user = user
         self.suite_base = suite_base
+
+    def _check_host(self, host: str):
+        provider = SSHProvider()
+        provider.execute(self.user, host, f"echo {host} is online")
 
     def run_suite(self, profile_name: str, suite: str, profile: TestProfile) -> str:
         """Execute phoronix test suite.
@@ -52,6 +57,9 @@ class SuiteRunProvider:
         Returns:
             str: _description_
         """
+        for host in profile.hosts:
+            self._check_host(host)
+
         slices = split_suite(suite, len(profile.hosts))
 
         result = []
