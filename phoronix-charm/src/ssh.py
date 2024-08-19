@@ -2,6 +2,7 @@
 
 import os
 import tempfile
+import time
 from os import path
 from subprocess import run
 from typing import Any
@@ -11,6 +12,7 @@ from cryptography.hazmat.primitives import serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from fabric import Config, Connection
 from invoke.exceptions import UnexpectedExit
+from paramiko import ssh_exception
 
 PHORONIX_PUBLIC_KEY = "phoronix-public.key"
 
@@ -181,13 +183,21 @@ class SSHConnection:
 
     def __enter__(self):
         """Create Fabric connection object."""
-        config = Config(overrides={"sudo": {"password": "ubuntu"}})
-        self.connection = Connection(
-            host=self._host,
-            user=self._user,
-            config=config,
-            connect_kwargs={"key_filename": PHORONIX_PRIVATE_KEY, "look_for_keys": "false"},
-        )
+        retries = 0
+        try:
+            config = Config(overrides={"sudo": {"password": "ubuntu"}})
+            self.connection = Connection(
+                host=self._host,
+                user=self._user,
+                config=config,
+                connect_kwargs={"key_filename": PHORONIX_PRIVATE_KEY, "look_for_keys": "false"},
+            )
+        except ssh_exception.NoValidConnectionsError as conn:
+            retries = retries + 1
+            if retries > 10:
+                raise conn
+            time.sleep(10)
+
         return self
 
     def __exit__(self, *args):
