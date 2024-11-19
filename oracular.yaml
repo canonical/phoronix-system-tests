@@ -1,0 +1,12 @@
+# This template allows to configure oracular vm 
+
+oracular:
+  flavor: staging-cpu4-ram8-disk100
+  image: auto-sync/ubuntu-oracular-daily-amd64-server-20241116-disk1.img
+  key_name: phoronix
+  proxy: http://squid.ps6.internal:3128/
+  sources: |
+    Types: deb deb-src
+    URIs: http://archive.ubuntu.com/ubuntu/
+    Suites: oracular oracular-updates oracular-security
+    Components: main universe restricted multiverse
