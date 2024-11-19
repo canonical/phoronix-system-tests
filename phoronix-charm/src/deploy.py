@@ -46,6 +46,7 @@ def get_server_config():
                 openstack_provider.SOURCES: value[openstack_provider.SOURCES],
                 openstack_provider.KEY_NAME: value[openstack_provider.KEY_NAME],
                 openstack_provider.PROXY: value[openstack_provider.PROXY],
+                openstack_provider.PPA: value[openstack_provider.PPA],
             }
             ret.append(server)
     return ret

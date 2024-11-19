@@ -17,6 +17,7 @@ FLAVOR = "flavor"
 SOURCES = "sources"
 KEY_NAME = "key_name"
 PROXY = "proxy"
+PPA = "ppa"
 
 logger = logging.getLogger(__name__)
 
@@ -94,6 +95,7 @@ class OpenStackProvider(ProvisioningProvider):
         sources = config["sources"]
         key_name = config["key_name"]
         proxy = config["proxy"]
+        ppa = []
         if "ppa" in config:
             ppa = config["ppa"]
         logger.info(f"Creating server {name}")
@@ -115,7 +117,7 @@ class OpenStackProvider(ProvisioningProvider):
         self.set_proxy_environment(name, proxy)
         logger.info(f"Set ubuntu sources for  {name}")
         self.replace_ubuntu_sources(name, sources)
-        if ppa is not None:
+        if len(ppa) > 0:
             logger.info(f"Add extra ppa {ppa}")
             self.add_ppa(name, ppa)
         logger.info(f"Setup Phoronix suite on {name}")
@@ -128,8 +130,9 @@ class OpenStackProvider(ProvisioningProvider):
             server_name(str): server ip
             commands(str): list of commands
         """
+        ip = self.__get_addr(server_name)
         for ppa in ppa_list:
-            self.ssh_provider.execute("ubuntu", server_name, f"add-apt-repository --yes {ppa}")
+            self.ssh_provider.execute(DEFAULT_USER, ip, f"add-apt-repository --yes {ppa}")
 
     def set_proxy_environment(self, server_name, proxy):
         """Add proxy url to .bashrc.
