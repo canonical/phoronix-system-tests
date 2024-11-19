@@ -79,6 +79,9 @@ class OpenStackProvider(ProvisioningProvider):
                 image: <image-name-or-id>
                 flavor: <flavor>
                 proxy: url
+                ppa: 
+                 - ppa1
+                 - ppa2
                 sources: |
                     Types: deb deb-src
                     URIs: http://archive.ubuntu.com/ubuntu/
@@ -91,6 +94,8 @@ class OpenStackProvider(ProvisioningProvider):
         sources = config["sources"]
         key_name = config["key_name"]
         proxy = config["proxy"]
+        if "ppa" in config:
+            ppa = config["ppa"]
         logger.info(f"Creating server {name}")
         # check that the server is provisioned.
         # if not, try to create it
@@ -110,8 +115,21 @@ class OpenStackProvider(ProvisioningProvider):
         self.set_proxy_environment(name, proxy)
         logger.info(f"Set ubuntu sources for  {name}")
         self.replace_ubuntu_sources(name, sources)
+        if ppa is not None:
+            logger.info(f"Add extra ppa {ppa}")
+            self.add_ppa(name, ppa)
         logger.info(f"Setup Phoronix suite on {name}")
         return self.setup_phoronix_suite(name)
+    
+    def add_ppa(self, server_name, ppa_list):
+        """Run extra commands on the server
+        
+        Args:
+            server_name(str): server ip
+            commands(str): list of commands
+        """
+        for ppa in ppa_list:
+            self.ssh_provider.execute("ubuntu", server_name, f"add-apt-repository --yes {ppa}")
 
     def set_proxy_environment(self, server_name, proxy):
         """Add proxy url to .bashrc.
