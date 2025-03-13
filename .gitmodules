@@ -1,3 +1,6 @@
 [submodule "pts"]
 	path = pts
 	url = git@github.com:vpa1977/phoronix-test-suite.git
+[submodule "ubuntu-pts-selection"]
+	path = ubuntu-pts-selection
+	url = https://github.com/canonical/ubuntu-pts-selection
